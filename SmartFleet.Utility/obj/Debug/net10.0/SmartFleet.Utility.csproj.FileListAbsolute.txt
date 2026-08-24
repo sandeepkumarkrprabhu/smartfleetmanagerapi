@@ -1,0 +1,11 @@
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\bin\Debug\net10.0\SmartFleet.Utility.deps.json
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\bin\Debug\net10.0\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\bin\Debug\net10.0\SmartFleet.Utility.pdb
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.GeneratedMSBuildEditorConfig.editorconfig
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.AssemblyInfoInputs.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.AssemblyInfo.cs
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.csproj.CoreCompileInputs.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\refint\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\SmartFleet.Utility.pdb
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net10.0\ref\SmartFleet.Utility.dll

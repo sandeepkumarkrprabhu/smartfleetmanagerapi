@@ -1,0 +1,17 @@
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Data.deps.json
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Data.runtimeconfig.json
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Data.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Data.pdb
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\bin\Debug\net9.0\SmartFleet.Utility.pdb
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.csproj.AssemblyReference.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.AssemblyInfoInputs.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.AssemblyInfo.cs
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.csproj.CoreCompileInputs.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFle.FA2A71A3.Up2Date
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\refint\SmartFleet.Data.dll
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.pdb
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\SmartFleet.Data.genruntimeconfig.cache
+D:\personal files\Projects\fleetManagement.webapi\SmartFleet.Data\obj\Debug\net9.0\ref\SmartFleet.Data.dll

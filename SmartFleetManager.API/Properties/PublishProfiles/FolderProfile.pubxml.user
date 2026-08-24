@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\personal files\Projects\fleetManagement.webapi\SmartFleetManager.API\bin\Release\net8.0\publish\</_PublishTargetUrl>
+    <History>True|2026-08-09T17:31:02.6119571Z||;True|2025-10-16T18:35:31.9241940+05:30||;True|2025-10-15T23:40:30.8717413+05:30||;True|2025-10-04T14:29:53.9674912+05:30||;True|2025-10-04T14:15:29.5951086+05:30||;True|2025-10-04T13:42:43.5560313+05:30||;True|2025-10-04T12:23:42.6889873+05:30||;True|2025-10-04T10:25:52.0554899+05:30||;True|2025-10-04T08:58:44.9348781+05:30||;True|2025-10-03T19:31:38.7678407+05:30||;True|2025-10-03T19:13:21.0343426+05:30||;True|2025-10-03T18:50:55.6747252+05:30||;True|2025-10-03T18:26:17.2450656+05:30||;True|2025-10-03T18:11:28.5952953+05:30||;True|2025-10-03T17:27:09.0110810+05:30||;True|2025-10-03T16:20:33.2105365+05:30||;True|2025-10-03T15:24:32.8290196+05:30||;True|2025-10-03T14:44:40.6520240+05:30||;True|2025-10-03T13:58:49.6803664+05:30||;True|2025-10-02T23:25:54.2967297+05:30||;True|2025-10-02T13:45:32.8817757+05:30||;True|2025-10-01T00:43:33.1278221+05:30||;True|2025-10-01T00:29:45.1155274+05:30||;True|2025-09-30T08:34:43.1051648+05:30||;True|2025-09-27T20:30:00.2048978+05:30||;True|2025-09-27T20:22:45.2963481+05:30||;True|2025-09-27T20:05:20.9215224+05:30||;True|2025-09-27T20:01:59.0289448+05:30||;True|2025-09-27T19:45:43.1520037+05:30||;True|2025-09-27T19:24:47.3918791+05:30||;True|2025-09-27T19:17:41.5185756+05:30||;True|2025-09-27T19:00:22.0504119+05:30||;True|2025-09-27T18:53:31.3964682+05:30||;True|2025-09-24T21:40:07.6035681+05:30||;True|2025-09-23T00:48:47.0075173+05:30||;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=PMXASS-001\SQLEXPRESS%3bDatabase=Fleet-DB%3bUser Id=sa%3bPassword=Password123%3bTrustServerCertificate=True%3bMultipleActiveResultSets=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

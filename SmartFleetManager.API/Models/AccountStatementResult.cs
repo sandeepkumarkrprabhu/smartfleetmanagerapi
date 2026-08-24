@@ -1,0 +1,19 @@
+﻿namespace SmartFleetManager.API.Models
+{
+    public class AccountStatementResult
+    {
+        public DateTime Date { get; set; }
+
+        public string ReferenceNo { get; set; }
+
+        public string TransactionType { get; set; }
+
+        public string Description { get; set; }
+
+        public decimal Debit { get; set; }
+
+        public decimal Credit { get; set; }
+
+        public decimal Balance { get; set; }
+    }
+}
