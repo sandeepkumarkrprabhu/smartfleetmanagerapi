@@ -199,6 +199,7 @@ namespace SmartFleet.Data
 
         public DbSet<ApplicationModuleSettingValue> applicationModuleSettingValues { get; set; }
 
+        public DbSet<PartyTypeSetting> partyTypeSettings { get; set; }
 
     }
 }

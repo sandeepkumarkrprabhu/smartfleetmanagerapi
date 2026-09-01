@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartFleet.Data;
 using SmartFleet.Data.Models;
@@ -26,7 +25,10 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Fetching all journal entries from database.");
             try
             {
-                var journalEntries = await _context.JournalEntries.Where(f => f.YearCode == yearCode).ToListAsync();
+                var journalEntries = await _context.JournalEntries.
+                                    Where(f => f.YearCode == yearCode)
+                                    .Include(f => f.Lines)
+                                    .ToListAsync();
                 _logger.LogInformation("Fetched {Count} journal entries.", journalEntries.Count);
                 return Ok(journalEntries);
             }

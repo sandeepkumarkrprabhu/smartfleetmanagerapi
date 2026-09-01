@@ -49,5 +49,11 @@ namespace SmartFleet.Data.Models
         [ForeignKey(nameof(DestinationId))]
         [JsonIgnore]
         public Location? Destination { get; set; }
+
+        public DateTime InvoiceDate { get; set; }
+
+        //Freight Charges
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal FreightCharges { get; set; }
     }
 }

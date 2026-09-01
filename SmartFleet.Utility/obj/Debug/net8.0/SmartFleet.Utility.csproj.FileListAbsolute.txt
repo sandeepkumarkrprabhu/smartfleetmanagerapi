@@ -20,3 +20,15 @@ C:\Pumex.Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net8.0\Sma
 C:\Pumex.Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net8.0\refint\SmartFleet.Utility.dll
 C:\Pumex.Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.pdb
 C:\Pumex.Projects\fleetManagement.webapi\SmartFleet.Utility\obj\Debug\net8.0\ref\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\bin\Debug\net8.0\SmartFleet.Utility.deps.json
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\bin\Debug\net8.0\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\bin\Debug\net8.0\SmartFleet.Utility.pdb
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.GeneratedMSBuildEditorConfig.editorconfig
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.AssemblyInfoInputs.cache
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.AssemblyInfo.cs
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.csproj.CoreCompileInputs.cache
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.sourcelink.json
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\refint\SmartFleet.Utility.dll
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\SmartFleet.Utility.pdb
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleet.Utility\obj\Debug\net8.0\ref\SmartFleet.Utility.dll

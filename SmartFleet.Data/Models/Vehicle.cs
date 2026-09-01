@@ -46,5 +46,8 @@ namespace SmartFleet.Data.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastUpdatedAt { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Weight { get; set; }
+
     }
 }

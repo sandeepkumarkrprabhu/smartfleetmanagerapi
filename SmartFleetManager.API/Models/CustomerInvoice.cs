@@ -50,6 +50,8 @@ namespace SmartFleetManager.API.Models
         public string ConsigneeName {get;set; }
         public string ToLocationName {get;set; }
 
+        public Boolean isSalesReturn {get;set; }
+
         public List<CustomerInvoiceDetail> Details { get; set; }
         public List<CustomerInvoiceConsigneeDetails> ConsigneeDetails { get; set; }
     }

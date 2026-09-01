@@ -21,23 +21,33 @@
         public string CustomerPAN { get; set; }
         public string InvoiceTemplateName {get; set; }
         public string BillingPeriod { get; set; }
+        public decimal BillAmount { get; set; }
 
         public int  SlNo { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
+        public string LrNo { get; set; }
+        public DateTime LrDate { get; set; }
         public string ConsigneeName { get; set; }
         public string VehicleNo { get; set; }
         public string VehicleType { get; set; }
+        public int mtnNo { get; set; }
         public int KMS { get; set; }
         public decimal FreightCharges { get; set; }
         public decimal DeliveryCharges { get; set; }
         public decimal LoadingUnloadingCharges { get; set; }
         public decimal totalAmount { get; set; }
+        public decimal haltingCharges { get; set; }
+
         public string Remarks { get; set; }
         public Boolean IsSalesReturn { get; set; }
 
         public string LoadingPoint { get; set; }
         public string OffLoadingPoint { get; set; }
+
+        public string allInvoiceFreights { get; set; }
+
+        public decimal goodsValue { get; set; }
    
     }
 }

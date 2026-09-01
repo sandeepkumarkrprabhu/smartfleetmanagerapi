@@ -22,7 +22,7 @@ namespace SmartFleetManager.API.Services
             try
             {
                 // Get Invoice
-                var invoice = await _context.BillTransaction
+                    var invoice = await _context.BillTransaction
                     .FirstOrDefaultAsync(i => i.Id == invoiceId);
 
                 if (invoice == null)

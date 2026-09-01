@@ -83,7 +83,8 @@ namespace SmartFleetManager.API.Controllers
                                                         DestinationLocationName = d.Name,
                                                         LrNo = tc.LRNo ?? "",
                                                         InvoiceNo = tc.InvoiceNo ?? "",
-                                                        GoodsValue = tc.GoodsValue ?? 0
+                                                        GoodsValue = tc.GoodsValue ?? 0,
+                                                        FreightCharges = tc.FreightCharges
                                                     }).ToList(),
 
                             };
@@ -531,6 +532,11 @@ namespace SmartFleetManager.API.Controllers
                 _context.TripTransaction.Add(trip);
                 await _context.SaveChangesAsync();
 
+                var newId = trip.Id;
+
+                //post the transation to accounts
+                await _tripService.PostTripToAccountsAsync(trip.Id);
+
                 _logger.LogInformation("Trip/Dispatch created with ID {Id}.", trip.Id);
                 return CreatedAtAction(nameof(GetTrip), new { id = trip.Id }, trip);
             }
@@ -557,50 +563,32 @@ namespace SmartFleetManager.API.Controllers
             if (existingTrip == null)
                 return NotFound();
 
+
+            // =========================================
+            // 1️ Delete AccountTransaction
+            // =========================================
+            if (trip.TransactionStatus == "Posted")
+            {
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == trip.TransactionReferenceId);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
+                }
+            }
+
             // =========================================
             // 1️⃣ UPDATE HEADER
             // =========================================
+            trip.TransactionReferenceId = 0;
+            trip.TransactionStatus = "Planned";
             _context.Entry(existingTrip).CurrentValues.SetValues(trip);
 
-            // =========================================
-            // 2️⃣ UPDATE PRODUCT DETAILS
-            // =========================================
-            //if (trip.ProductDetails != null)
-            //{
-            //    // Remove deleted products
-            //    foreach (var existingProduct in existingTrip.ProductDetails.ToList())
-            //    {
-            //        if (!trip.ProductDetails.Any(p => p.Id == existingProduct.Id))
-            //        {
-            //            _context.Remove(existingProduct);
-            //        }
-            //    }
-
-            //    //foreach (var incomingProduct in trip.ProductDetails)
-            //    //{
-            //    //    var existingProduct = existingTrip.ProductDetails
-            //    //        .FirstOrDefault(p => p.Id == incomingProduct.Id);
-
-            //    //    if (existingProduct != null)
-            //    //    {
-            //    //        // Update existing
-            //    //        existingProduct.ProductId = incomingProduct.ProductId;
-            //    //        existingProduct.Qty = incomingProduct.Qty;
-            //    //        existingProduct.UnitId = incomingProduct.UnitId;
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        // Add new
-            //    //        existingTrip.ProductDetails.Add(new TripProductDetail
-            //    //        {
-            //    //            ProductId = incomingProduct.ProductId,
-            //    //            Qty = incomingProduct.Qty,
-            //    //            UnitId = incomingProduct.UnitId,
-            //    //        });
-            //    //    }
-            //    //}
-            //}
-
+            
             // =========================================
             // 3️⃣ UPDATE CONSIGNEE DETAILS
             // =========================================
@@ -631,6 +619,7 @@ namespace SmartFleetManager.API.Controllers
                         existingConsignee.UnitId = incomingConsignee.UnitId;
                         existingConsignee.Qty = incomingConsignee.Qty;
                         existingConsignee.GoodsValue = incomingConsignee.GoodsValue;
+                        existingConsignee.FreightCharges = incomingConsignee.FreightCharges;
                     }
                     else
                     {
@@ -644,7 +633,8 @@ namespace SmartFleetManager.API.Controllers
                             ProductId = incomingConsignee.ProductId,
                             UnitId = incomingConsignee.UnitId,
                             Qty = incomingConsignee.Qty,
-                            GoodsValue = incomingConsignee.GoodsValue
+                            GoodsValue = incomingConsignee.GoodsValue,
+                            FreightCharges = incomingConsignee.FreightCharges,
                         });
                     }
                 }
@@ -653,6 +643,11 @@ namespace SmartFleetManager.API.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+
+                //post the transation to accounts
+                await _tripService.PostTripToAccountsAsync(trip.Id);
+
+
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -682,6 +677,20 @@ namespace SmartFleetManager.API.Controllers
                 {
                     _logger.LogWarning("Attempted to delete non-existent trip with ID {Id}.", id);
                     return NotFound();
+                }
+
+                if (selectedTrip.TransactionStatus =="Posted")
+                {
+                    // Find the transaction by TransactionReferenceId
+                    var accountTransaction = await _context.AccountTransactions
+                        .FirstOrDefaultAsync(t => t.Id == selectedTrip.Id);
+
+                    if (accountTransaction != null)
+                    {
+                        // Remove the account transaction
+                        _context.AccountTransactions.Remove(accountTransaction);
+                        _context.SaveChanges();
+                    }
                 }
 
                 selectedTrip.Status = "Cancelled";

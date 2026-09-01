@@ -195,6 +195,8 @@ namespace SmartFleetManager.API.Controllers
                 _context.payments.Add(payment);
                 await _context.SaveChangesAsync();
 
+                await _transactionService.CreatePaymentTransactionAsync(payment);
+
                 _logger.LogInformation("payment created with ID {Id}.", payment.Id);
                 return CreatedAtAction(nameof(GetPaymentsById), new { id = payment.Id }, payment);
             }
@@ -221,9 +223,28 @@ namespace SmartFleetManager.API.Controllers
             if (existingPayment == null)
                 return NotFound();
 
+            // =========================================
+            // 1️ Delete AccountTransaction
+            // =========================================
+            if (payment.AccountStatus == "Posted")
+            {
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == payment.AccountTransactionId);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
+                }
+            }
+
             // ==========================
             // Update header fields
             // ==========================
+            payment.AccountTransactionId = 0;
+            payment.AccountStatus = "Draft";
             _context.Entry(existingPayment).CurrentValues.SetValues(payment);
 
 
@@ -314,6 +335,10 @@ namespace SmartFleetManager.API.Controllers
 
             await _context.SaveChangesAsync();
 
+            var paymentDet = _context.payments.Where(f => f.Id == payment.Id).FirstOrDefault();
+
+            await _transactionService.CreatePaymentTransactionAsync(paymentDet);
+
             return Ok(existingPayment);
         }
 
@@ -331,11 +356,22 @@ namespace SmartFleetManager.API.Controllers
                     return NotFound();
                 }
 
-                if (payment.AccountStatus == "Posted")
+                if (payment.AccountStatus == "verified")
                 {
-                    var msg = $"Payment is posted to accounts with {payment.AccountTransactionId}. Payment cannot be cancelled.";
+                    var msg = $"Payment is verified to accounts with {payment.AccountTransactionId}. Payment cannot be cancelled.";
                     _logger.LogWarning(msg);
                     return BadRequest(new { error = msg });
+                }
+
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == payment.Id);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
                 }
 
                 _context.payments.Remove(payment);

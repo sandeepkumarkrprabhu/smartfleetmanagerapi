@@ -188,16 +188,18 @@ namespace SmartFleetManager.API.Controllers
 
         // POST api/<ReceiptsController>
         [HttpPost]
-        public async Task<ActionResult<Receipt>> PostReceipts(Receipt Receipt)
+        public async Task<ActionResult<Receipt>> PostReceipts(Receipt receipt)
         {
             _logger.LogInformation("Creating a new Receipt.");
             try
             {
-                _context.Receipts.Add(Receipt);
+                _context.Receipts.Add(receipt);
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Receipt created with ID {Id}.", Receipt.Id);
-                return CreatedAtAction(nameof(GetReceiptsById), new { id = Receipt.Id }, Receipt);
+                await _transactionService.CreateReceiptTransactionAsync(receipt);
+
+                _logger.LogInformation("Receipt created with ID {Id}.", receipt.Id);
+                return CreatedAtAction(nameof(GetReceiptsById), new { id = receipt.Id }, receipt);
             }
             catch (Exception ex)
             {
@@ -223,9 +225,28 @@ namespace SmartFleetManager.API.Controllers
             if (existingReceipt == null)
                 return NotFound();
 
+            // =========================================
+            // 1️ Delete AccountTransaction
+            // =========================================
+            if (receipt.AccountStatus == "Posted")
+            {
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == receipt.AccountTransactionId);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
+                }
+            }
+
             // ==========================
             // Update header fields
             // ==========================
+            receipt.AccountTransactionId = 0;
+            receipt.AccountStatus = "Draft";
             _context.Entry(existingReceipt).CurrentValues.SetValues(receipt);
 
 
@@ -315,6 +336,11 @@ namespace SmartFleetManager.API.Controllers
             }
 
             await _context.SaveChangesAsync();
+
+            var receiptDet = _context.Receipts.Where(f => f.Id == receipt.Id).FirstOrDefault();
+
+
+            await _transactionService.CreateReceiptTransactionAsync(receiptDet);
 
             return Ok(existingReceipt);
         }

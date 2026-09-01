@@ -122,7 +122,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(5731),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 560, DateTimeKind.Local).AddTicks(5447),
                             GroupName = "CASH",
                             IFSCCode = "",
                             IsActive = true,
@@ -145,7 +145,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6739),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2252),
                             GroupName = "BANK",
                             IFSCCode = "",
                             IsActive = true,
@@ -168,7 +168,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6743),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2274),
                             GroupName = "Receivables",
                             IFSCCode = "",
                             IsActive = true,
@@ -191,7 +191,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6745),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2280),
                             GroupName = "Inventory",
                             IFSCCode = "",
                             IsActive = true,
@@ -214,7 +214,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6746),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2284),
                             GroupName = "Vehicles",
                             IFSCCode = "",
                             IsActive = true,
@@ -237,7 +237,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6748),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2289),
                             GroupName = "Depreciation",
                             IFSCCode = "",
                             IsActive = true,
@@ -260,7 +260,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6825),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2507),
                             GroupName = "Fuel",
                             IFSCCode = "",
                             IsActive = true,
@@ -283,7 +283,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6827),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2512),
                             GroupName = "Spare & Inventory",
                             IFSCCode = "",
                             IsActive = true,
@@ -306,7 +306,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6829),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2517),
                             GroupName = "Payables",
                             IFSCCode = "",
                             IsActive = true,
@@ -329,7 +329,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6830),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2521),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -352,7 +352,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6840),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2526),
                             GroupName = "Loans",
                             IFSCCode = "",
                             IsActive = true,
@@ -375,7 +375,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6841),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2530),
                             GroupName = "Payable",
                             IFSCCode = "",
                             IsActive = true,
@@ -398,7 +398,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6843),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2561),
                             GroupName = "Lease",
                             IFSCCode = "",
                             IsActive = true,
@@ -421,7 +421,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6844),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2565),
                             GroupName = "Equity",
                             IFSCCode = "",
                             IsActive = true,
@@ -444,7 +444,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6908),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2570),
                             GroupName = "Earnings",
                             IFSCCode = "",
                             IsActive = true,
@@ -467,7 +467,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6909),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2574),
                             GroupName = "Income",
                             IFSCCode = "",
                             IsActive = true,
@@ -490,7 +490,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6911),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2578),
                             GroupName = "Incone",
                             IFSCCode = "",
                             IsActive = true,
@@ -513,7 +513,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6913),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2583),
                             GroupName = "Incone",
                             IFSCCode = "",
                             IsActive = true,
@@ -536,7 +536,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6914),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2588),
                             GroupName = "Incone",
                             IFSCCode = "",
                             IsActive = true,
@@ -559,7 +559,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6916),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2592),
                             GroupName = "Incone",
                             IFSCCode = "",
                             IsActive = true,
@@ -582,7 +582,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6917),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2597),
                             GroupName = "Incone",
                             IFSCCode = "",
                             IsActive = true,
@@ -605,7 +605,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6919),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2601),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -628,7 +628,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6920),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2647),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -651,7 +651,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6922),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2652),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -674,7 +674,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6923),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2657),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -697,7 +697,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6925),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2661),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -720,7 +720,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6926),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2666),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -743,7 +743,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6928),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2670),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -766,7 +766,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6929),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2675),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -789,7 +789,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6931),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2679),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -812,7 +812,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6932),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2684),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -835,7 +835,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6934),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2688),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -858,7 +858,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6935),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2693),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -881,7 +881,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6937),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2697),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -904,7 +904,7 @@ namespace SmartFleet.Data.Migrations
                             BankName = "",
                             BranchID = 1,
                             BranchName = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(6938),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(2702),
                             GroupName = "Expenses",
                             IFSCCode = "",
                             IsActive = true,
@@ -1487,9 +1487,9 @@ namespace SmartFleet.Data.Migrations
                             CompanyId = "1",
                             ContactNo = "",
                             ContactPhone = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 181, DateTimeKind.Local).AddTicks(4222),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 556, DateTimeKind.Local).AddTicks(1804),
                             IsActive = true,
-                            LastUpdatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 181, DateTimeKind.Local).AddTicks(4314),
+                            LastUpdatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 556, DateTimeKind.Local).AddTicks(2056),
                             Name = "Main Branch"
                         });
                 });
@@ -1564,10 +1564,10 @@ namespace SmartFleet.Data.Migrations
                             Address = "",
                             ContactNo = "",
                             ContactPhone = "",
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 181, DateTimeKind.Local).AddTicks(1616),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 555, DateTimeKind.Local).AddTicks(3813),
                             IsActive = true,
-                            LastUpdatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 181, DateTimeKind.Local).AddTicks(1716),
-                            LicensedValidTill = new DateTime(2026, 10, 25, 15, 29, 17, 181, DateTimeKind.Local).AddTicks(1960),
+                            LastUpdatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 555, DateTimeKind.Local).AddTicks(4094),
+                            LicensedValidTill = new DateTime(2027, 2, 27, 16, 41, 15, 555, DateTimeKind.Local).AddTicks(4805),
                             Name = "Default Company"
                         });
                 });
@@ -1748,7 +1748,7 @@ namespace SmartFleet.Data.Migrations
                         {
                             Id = 1,
                             BranchID = 1,
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 184, DateTimeKind.Local).AddTicks(7216),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 564, DateTimeKind.Local).AddTicks(4161),
                             Email = "admin@user.com",
                             EmpAccountID = 23,
                             FirstName = "ADMIN",
@@ -1801,7 +1801,7 @@ namespace SmartFleet.Data.Migrations
                             Code = "2026",
                             Description = "2026-2027",
                             FinEndDate = new DateTime(2027, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FinStartDate = new DateTime(2026, 4, 28, 15, 29, 17, 180, DateTimeKind.Local).AddTicks(5243),
+                            FinStartDate = new DateTime(2026, 8, 31, 16, 41, 15, 552, DateTimeKind.Local).AddTicks(4451),
                             IsActive = true,
                             Name = "2026-2027"
                         });
@@ -2413,6 +2413,39 @@ namespace SmartFleet.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SmartFleet.Data.Models.PartyTypeSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountMode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAdvanceAccountRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsExpenseAccountRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPayableAccountRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReceivableAccountRequired")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("partyTypeSettings");
+                });
+
             modelBuilder.Entity("SmartFleet.Data.Models.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -2903,8 +2936,14 @@ namespace SmartFleet.Data.Migrations
                     b.Property<int>("DestinationId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("FreightCharges")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal?>("GoodsValue")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("InvoiceNo")
                         .HasMaxLength(200)
@@ -3242,7 +3281,7 @@ namespace SmartFleet.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 184, DateTimeKind.Local).AddTicks(9550),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 565, DateTimeKind.Local).AddTicks(675),
                             IsActive = true,
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Password = "User",
@@ -3308,17 +3347,17 @@ namespace SmartFleet.Data.Migrations
                         new
                         {
                             RoleID = 1,
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(8741),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(8674),
                             Name = "Admin",
-                            UpdatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(8844),
+                            UpdatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(8987),
                             isActive = true
                         },
                         new
                         {
                             RoleID = 2,
-                            CreatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(8925),
+                            CreatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(9212),
                             Name = "General",
-                            UpdatedAt = new DateTime(2026, 4, 28, 15, 29, 17, 183, DateTimeKind.Local).AddTicks(8926),
+                            UpdatedAt = new DateTime(2026, 8, 31, 16, 41, 15, 561, DateTimeKind.Local).AddTicks(9214),
                             isActive = true
                         });
                 });
@@ -3693,6 +3732,9 @@ namespace SmartFleet.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("status")
                         .IsRequired()

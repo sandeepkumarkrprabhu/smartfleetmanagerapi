@@ -4,6 +4,7 @@ using SmartFleet.Data;
 using SmartFleet.Data.Models;
 using SmartFleetManager.API.Interfaces;
 using SmartFleetManager.API.Models;
+using SmartFleetManager.API.Services;
 
 namespace SmartFleetManager.API.Controllers
 {
@@ -135,6 +136,7 @@ namespace SmartFleetManager.API.Controllers
                                           BillNo = b.RMTInvoiceNo.ToString(),
                                           BillDate = b.BillDate,
                                           BillingPeriod = ($"{b.BIllFromDate:dd/MM/yyyy} - {b.BillToDate:dd/MM/yyyy}"),
+                                          BillAmount = b.TotalAmount,
                                           CustomerName = bc.Name ?? "",
                                           CustomerAddress = bc.Address,
                                           CustomerPhoneNo = bc.Phone,
@@ -147,20 +149,38 @@ namespace SmartFleetManager.API.Controllers
                                                       select tc.InvoiceNo).FirstOrDefault()??"",
                                           InvoiceDate = t.LRDate,
                                           LoadingPoint = l.Name,
-                                          OffLoadingPoint = (from tc in _context.TripConsigneeDetails
-                                                             join ol in _context.Locations on tc.DestinationId equals ol.Id
-                                                             where tc.TripTransactionId == t.Id
-                                                             select ol.Name).FirstOrDefault() ?? "",
+                                          OffLoadingPoint = string.Join("/ ",
+                                                    from tc in _context.TripConsigneeDetails
+                                                    join ol in _context.Locations
+                                                        on tc.DestinationId equals ol.Id
+                                                    where tc.TripTransactionId == t.Id
+                                                    select ol.Name
+                                                ),
+                                          allInvoiceFreights = string.Join(", ",
+                                                _context.TripConsigneeDetails
+                                                    .Where(tc => tc.TripTransactionId == t.Id)
+                                                    .Select(tc => tc.FreightCharges)),
                                           DeliveryCharges = t.AdditionalCost,
                                           LoadingUnloadingCharges = t.LoadingCost,
                                           totalAmount = t.TotalCost,
-                                          ConsigneeName = (from tc in _context.TripConsigneeDetails
-                                                           join c in _context.Customers on tc.ToConsigneeId equals c.Id
-                                                           where tc.TripTransactionId == t.Id
-                                                           select c.Name).FirstOrDefault() ?? "",
+                                          ConsigneeName = string.Join("/ ",
+                                                        from tc in _context.TripConsigneeDetails
+                                                        join c in _context.Customers
+                                                            on tc.ToConsigneeId equals c.Id
+                                                        where tc.TripTransactionId == t.Id
+                                                        select c.Name
+                                                    ),
+                                          LrNo = string.Join("/ ",
+                                                _context.TripConsigneeDetails
+                                                    .Where(tc => tc.TripTransactionId == t.Id)
+                                                    .Select(tc => tc.LRNo)),
+                                          LrDate = t.LRDate,
                                           VehicleNo = v.Name,
                                           VehicleType = v.VehicleType,
                                           KMS = t.Kms ?? 0,
+                                          mtnNo = (t.MtnNo??0),
+                                          goodsValue = t.GoodsValue??0,
+                                          haltingCharges = t.HaltingCharges ?? 0,
                                           FreightCharges = t.FrieghtCharges ?? 0,
                                           Remarks = t.Notes ?? "",
                                           IsSalesReturn = t.IsSalesReturnTrip
@@ -297,7 +317,7 @@ namespace SmartFleetManager.API.Controllers
                         CustomerEmail = c.Email,
                         CustomerGST = c.GSTNo,
                         CustomerPan = c.PanNo,
-                        CustomerTemplate = c.InvoiceTemplateName
+                        CustomerTemplate = c.InvoiceTemplateName,
                     }
                 ).FirstOrDefaultAsync();
 
@@ -309,8 +329,6 @@ namespace SmartFleetManager.API.Controllers
                                             join v in _context.Vehilces on t.VehicleId equals v.Id
                                             join o in _context.Locations on bd.OriginId equals o.Id
                                             join d in _context.Locations on bd.DestinationId equals d.Id
-                                            join tp in _context.TripProductDetails on t.Id equals tp.TripTransactionId
-                                            join p in _context.Products on tp.ProductId equals p.Id
                                             where bd.BTId == id
                                             select new CustomerInvoiceDetail
                                             {
@@ -320,7 +338,6 @@ namespace SmartFleetManager.API.Controllers
                                                 FromStockistName = t.FromStockist.Name ?? "",
                                                 Origin = o.Name,
                                                 Destination = d.Name,
-                                                Description = p.Name,
                                                 LRNo = t.ReferenceNo ?? "",
                                                 InvoiceNo = t.InvoiceNo ?? "",
                                                 KMS = t.Kms ?? 0,
@@ -340,6 +357,15 @@ namespace SmartFleetManager.API.Controllers
                                                 VehicleNo = v.Name,
                                                 remarks = t.Notes ?? "",
                                                 IsSalesReturn = t.IsSalesReturnTrip,
+                                                Description = string.Join(", ",
+                                                        _context.TripConsigneeDetails
+                                                            .Where(tc => tc.TripTransactionId == t.Id)
+                                                            .Join(
+                                                                _context.Products,
+                                                                tc => tc.ProductId,
+                                                                p => p.Id,
+                                                                (tc, p) => p.Name
+                                                            ).ToList())
                                             }).ToListAsync();
 
                 if (invoiceDetails == null)
@@ -372,6 +398,9 @@ namespace SmartFleetManager.API.Controllers
                     TotalTax = invoiceHeader.TotalTaxAmount,
                     GrandAmount = invoiceHeader.GrandAmount,
                     status = invoiceHeader.status,
+                    LrNo = string.Join(", ",invoiceDetails.Select(x => x.LRNo).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct()),
+                    LRDate = invoiceDetails.First().LRDate,
+                    isSalesReturn = invoiceDetails?.FirstOrDefault()?.IsSalesReturn??false,
                 };
 
                 var invoiceConsigneeDetails = await (from bd in _context.BillItemDetails
@@ -996,6 +1025,10 @@ namespace SmartFleetManager.API.Controllers
 
                     // Step 5: Save trip updates
                     await _context.SaveChangesAsync();
+
+                    var newId = bill.Id;
+
+                    await _invoiceService.PostInvoiceToAccountsAsync(newId);
                 }
 
                 _logger.LogInformation("Invoice created successfully with ID {Id}.", bill.Id);
@@ -1028,11 +1061,34 @@ namespace SmartFleetManager.API.Controllers
                 return BadRequest("Invoice ID mismatch");
             }
 
+            // =========================================
+            // 1️ Delete AccountTransaction
+            // =========================================
+            if (bill.AccountStatus == "Posted")
+            {
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == bill.AccountTransactionId);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
+                }
+            }
+
+            bill.AccountStatus = "Draft";
+            bill.AccountTransactionId = 0;
             _context.Entry(bill).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+
+
+                //post the transation to accounts
+                await _invoiceService.PostInvoiceToAccountsAsync(bill.Id);
                 _logger.LogInformation("Invoice with ID {Id} updated successfully.", id);
                 return Ok(bill);
             }
@@ -1069,18 +1125,25 @@ namespace SmartFleetManager.API.Controllers
                     _logger.LogWarning("Attempted to delete non-existent invoice with ID {Id}.", id);
                     return NotFound();
                 }
-                if (bill.AccountStatus == "Posted")
+                if (bill.AccountStatus == "verified")
                 {
-                    var msg = $"Invoice is posted to accounts with {bill.AccountTransactionId}. Invoice cannot be cancelled.";
+                    var msg = $"Invoice is verified to accounts with {bill.AccountTransactionId}. Invoice cannot be cancelled.";
                     _logger.LogWarning(msg);
                     return BadRequest(new { error = msg });
                 }
 
                 if ((bill.AccountTransactionId ?? 0) > 0)
                 {
-                    var msg = "Invoice is posted to accounts.";
-                    _logger.LogWarning("Invoice with ID {Id} is posted to Accounts.", id);
-                    return BadRequest(new { error = msg });
+                    // Find the transaction by TransactionReferenceId
+                    var accountTransaction = await _context.AccountTransactions
+                        .FirstOrDefaultAsync(t => t.Id == bill.AccountTransactionId);
+
+                    if (accountTransaction != null)
+                    {
+                        // Remove the account transaction
+                        _context.AccountTransactions.Remove(accountTransaction);
+                        _context.SaveChanges();
+                    }
                 }
 
                 bill.IsDeleted = true;
