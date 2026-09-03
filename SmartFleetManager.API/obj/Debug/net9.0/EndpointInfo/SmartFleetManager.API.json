@@ -7854,6 +7854,15 @@
             "type": "number",
             "format": "double",
             "readOnly": true
+          },
+          "accountTransactionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "accountStatus": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

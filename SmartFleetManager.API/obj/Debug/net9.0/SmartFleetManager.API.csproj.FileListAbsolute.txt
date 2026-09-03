@@ -334,10 +334,10 @@ D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.A
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\staticwebassets.development.json
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\swae.build.ex.cache
-D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\SmartFle.F5580F98.Up2Date
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\SmartFleetManager.API.dll
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\refint\SmartFleetManager.API.dll
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\SmartFleetManager.API.pdb
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\SmartFleetManager.API.genruntimeconfig.cache
 D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\ref\SmartFleetManager.API.dll
+D:\personal files\Projects\fleetmanagement\fleet-manager-api\SmartFleetManager.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

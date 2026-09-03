@@ -39,5 +39,8 @@ namespace SmartFleet.Data.Models
 
         [NotMapped]
         public decimal TotalCredit => Lines?.Where(l => l.Credit > 0).Sum(l => l.Credit) ?? 0;
+
+        public int? AccountTransactionId { get; set; }
+        public string? AccountStatus { get; set; } = "Draft";
     }
 }

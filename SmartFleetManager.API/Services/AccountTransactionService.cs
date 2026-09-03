@@ -635,7 +635,7 @@ namespace SmartFleetManager.API.Services
             if (journal == null || journal.Lines == null || !journal.Lines.Any())
                 throw new ArgumentException("Journal entry must have at least one line.");
 
-            using var dbTransaction = await _context.Database.BeginTransactionAsync();
+            //using var dbTransaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
@@ -681,13 +681,19 @@ namespace SmartFleetManager.API.Services
                 await _context.AccountTransactionDetails.AddRangeAsync(details);
                 await _context.SaveChangesAsync();
 
-                await dbTransaction.CommitAsync();
+                journal.AccountTransactionId = Convert.ToInt32(transaction.Id);
+                journal.AccountStatus = "Posted";
+                _context.JournalEntries.Update(journal);
+                await _context.SaveChangesAsync(); // Save to get transaction.Id
+
+
+                //await dbTransaction.CommitAsync();
 
                 return transaction.Id;
             }
             catch
             {
-                await dbTransaction.RollbackAsync();
+                //await dbTransaction.RollbackAsync();
                 throw;
             }
         }

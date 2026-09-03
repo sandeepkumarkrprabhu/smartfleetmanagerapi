@@ -23,9 +23,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddScoped<IJournalTransactionService, JournalService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<ITripService, TripServices>();
 builder.Services.AddScoped<IAccountTransactionService, AccountTransactionService>();
+
 
 
 // CORS

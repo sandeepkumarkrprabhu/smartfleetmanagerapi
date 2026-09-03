@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartFleet.Data;
 using SmartFleet.Data.Models;
+using SmartFleetManager.API.Interfaces;
 
 namespace SmartFleetManager.API.Controllers
 {
@@ -11,11 +12,14 @@ namespace SmartFleetManager.API.Controllers
     {
         private readonly AppDbContext _context;
         private readonly ILogger<JournalEntryController> _logger;
+        private readonly IJournalTransactionService _journalTransactionService;
+        private readonly IAccountTransactionService _transactionService;
 
-        public JournalEntryController(AppDbContext context, ILogger<JournalEntryController> logger)
+        public JournalEntryController(AppDbContext context, ILogger<JournalEntryController> logger, IJournalTransactionService journalTransactionService)
         {
             _context = context;
             _logger = logger;
+            _journalTransactionService = journalTransactionService;
         }
 
         // GET: api/<JournalEntryController>
@@ -119,6 +123,8 @@ namespace SmartFleetManager.API.Controllers
                 _context.JournalEntries.Add(journal);
                 await _context.SaveChangesAsync();
 
+                await _journalTransactionService.PostTripToAccountsAsync(journal.JournalEntryId);
+
                 _logger.LogInformation("Journal Entry created with ID {Id}.", journal.JournalEntryId);
                 return CreatedAtAction(nameof(GetJournalEntryById), new { id = journal.JournalEntryId }, journal);
             }
@@ -149,10 +155,28 @@ namespace SmartFleetManager.API.Controllers
                 return NotFound();
             }
 
-            // ✅ Update scalar properties
+            // =========================================
+            // 1️ Delete AccountTransaction
+            // =========================================
+            if (journal.AccountStatus == "Posted")
+            {
+                // Find the transaction by TransactionReferenceId
+                var accountTransaction = await _context.AccountTransactions
+                    .FirstOrDefaultAsync(t => t.Id == journal.AccountTransactionId);
+
+                if (accountTransaction != null)
+                {
+                    // Remove the account transaction
+                    _context.AccountTransactions.Remove(accountTransaction);
+                    _context.SaveChanges();
+                }
+            }
+
+
+            // Update scalar properties
             _context.Entry(existingJournal).CurrentValues.SetValues(journal);
 
-            // ✅ If you have JournalLines (child collection)
+            // If you have JournalLines (child collection)
             if (journal.Lines != null)
             {
                 // Remove deleted lines
@@ -182,6 +206,8 @@ namespace SmartFleetManager.API.Controllers
             }
 
             await _context.SaveChangesAsync();
+
+            await _journalTransactionService.PostTripToAccountsAsync(existingJournal.JournalEntryId);
 
             return Ok(existingJournal);
         }
