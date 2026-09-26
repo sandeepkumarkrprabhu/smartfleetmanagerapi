@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAccountTransactionService, AccountTransactionService
 builder.Services.AddScoped<IAccountStatementService, AccountStatementService>();
 builder.Services.AddScoped<ITrialBalanceService, TrialBalanceService>();
 builder.Services.AddScoped<IReceiptService, ReceiptService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddCors(options =>
 {
