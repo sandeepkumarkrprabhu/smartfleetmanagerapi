@@ -1,7 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Migrations;
 using SmartFleet.Data.Data.Seeds;
 using SmartFleet.Data.Models;
 using SmartFleet.Utility;

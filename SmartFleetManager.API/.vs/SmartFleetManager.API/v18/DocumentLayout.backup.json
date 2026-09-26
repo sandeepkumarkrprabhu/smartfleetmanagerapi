@@ -1,7 +1,11 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3F0197A7-EFF5-455A-8D8B-472AA28DBA51}|..\\SmartFleet.Data\\SmartFleet.Data.csproj|d:\\personal files\\projects\\fleetmanagement\\fleet-manager-api\\smartfleet.data\\appdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +13,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 126,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +30,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:11:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDbContext .cs",
+              "DocumentMoniker": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleet.Data\\AppDbContext .cs",
+              "RelativeDocumentMoniker": "..\\SmartFleet.Data\\AppDbContext .cs",
+              "ToolTip": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleet.Data\\AppDbContext .cs",
+              "RelativeToolTip": "..\\SmartFleet.Data\\AppDbContext .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T18:33:42.16Z",
+              "EditorCaption": ""
             }
           ]
         },

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartFleet.Utility")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c0fe575bf816dd5e8141740e5ae9b676032eff7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a55188d5c62918ab1aa4cc4aaf1f708bcfc6ba49")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartFleet.Utility")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartFleet.Utility")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
