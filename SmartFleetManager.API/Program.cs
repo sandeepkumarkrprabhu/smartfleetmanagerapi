@@ -28,6 +28,8 @@ builder.Services.AddScoped<IJournalTransactionService, JournalService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<ITripService, TripServices>();
 builder.Services.AddScoped<IAccountTransactionService, AccountTransactionService>();
+builder.Services.AddScoped<IAccountStatementService, AccountStatementService>();
+builder.Services.AddScoped<ITrialBalanceService, TrialBalanceService>();
 
 
 

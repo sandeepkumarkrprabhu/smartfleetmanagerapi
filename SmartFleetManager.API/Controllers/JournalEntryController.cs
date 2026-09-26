@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartFleet.Data;
+using Microsoft.AspNetCore.Mvc;
 using SmartFleet.Data.Models;
 using SmartFleetManager.API.Interfaces;
 
@@ -10,14 +8,13 @@ namespace SmartFleetManager.API.Controllers
     [ApiController]
     public class JournalEntryController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly ILogger<JournalEntryController> _logger;
         private readonly IJournalTransactionService _journalTransactionService;
-        private readonly IAccountTransactionService _transactionService;
 
-        public JournalEntryController(AppDbContext context, ILogger<JournalEntryController> logger, IJournalTransactionService journalTransactionService)
+        public JournalEntryController(
+            ILogger<JournalEntryController> logger,
+            IJournalTransactionService journalTransactionService)
         {
-            _context = context;
             _logger = logger;
             _journalTransactionService = journalTransactionService;
         }
@@ -29,11 +26,8 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Fetching all journal entries from database.");
             try
             {
-                var journalEntries = await _context.JournalEntries.
-                                    Where(f => f.YearCode == yearCode)
-                                    .Include(f => f.Lines)
-                                    .ToListAsync();
-                _logger.LogInformation("Fetched {Count} journal entries.", journalEntries.Count);
+                var journalEntries = await _journalTransactionService.GetJournalsAsync(yearCode);
+                _logger.LogInformation("Fetched {Count} journal entries.", journalEntries.Count());
                 return Ok(journalEntries);
             }
             catch (Exception ex)
@@ -50,16 +44,8 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Fetching journal entries Summary");
             try
             {
-                var payment = await _context.JournalEntries
-                            .Where(p => p.EntryDate.Year == yearCode).ToListAsync();
-
-                if (payment == null)
-                {
-                    _logger.LogWarning("Journal Entries for current year not found.");
-                    return NotFound();
-                }
-
-                return Ok(payment);
+                var journalEntries = await _journalTransactionService.GetJournalSummaryByYearAsync(yearCode);
+                return Ok(journalEntries);
             }
             catch (Exception ex)
             {
@@ -75,8 +61,7 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Fetching current/last journal No from database.");
             try
             {
-                var currentCode = await _context.JournalEntries.Where(f => f.YearCode == yearCode).OrderByDescending(p => p.JournalEntryId)
-                        .Select(s => (int?)s.JournalNo).FirstOrDefaultAsync() ?? 0;
+                var currentCode = await _journalTransactionService.GetCurrentCodeAsync(yearCode);
                 _logger.LogInformation("Fetched {currentCode} for Payment.", currentCode);
                 return Ok(new { CurrentCode = currentCode });
             }
@@ -94,10 +79,7 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Fetching journal entry with ID {Id}.", id);
             try
             {
-                var journalEntry = await _context.JournalEntries
-                            .Include(t => t.Lines)
-                            .FirstOrDefaultAsync(t => t.JournalEntryId == id);
-
+                var journalEntry = await _journalTransactionService.GetJournalEntryByIdAsync(id);
                 if (journalEntry == null)
                 {
                     _logger.LogWarning("Journal Entry with ID {Id} not found.", id);
@@ -120,11 +102,7 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Creating a new Journal Entry.");
             try
             {
-                _context.JournalEntries.Add(journal);
-                await _context.SaveChangesAsync();
-
-                await _journalTransactionService.PostTripToAccountsAsync(journal.JournalEntryId);
-
+                await _journalTransactionService.CreateJournalEntryAsync(journal);
                 _logger.LogInformation("Journal Entry created with ID {Id}.", journal.JournalEntryId);
                 return CreatedAtAction(nameof(GetJournalEntryById), new { id = journal.JournalEntryId }, journal);
             }
@@ -142,72 +120,11 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Updating journal with ID {Id}.", id);
 
             if (id != journal.JournalEntryId)
-            {
                 return BadRequest("Journal ID mismatch");
-            }
 
-            var existingJournal = await _context.JournalEntries
-                .Include(j => j.Lines) 
-                .FirstOrDefaultAsync(j => j.JournalEntryId == id);
-
+            var existingJournal = await _journalTransactionService.UpdateJournalEntryAsync(id, journal);
             if (existingJournal == null)
-            {
                 return NotFound();
-            }
-
-            // =========================================
-            // 1️ Delete AccountTransaction
-            // =========================================
-            if (journal.AccountStatus == "Posted")
-            {
-                // Find the transaction by TransactionReferenceId
-                var accountTransaction = await _context.AccountTransactions
-                    .FirstOrDefaultAsync(t => t.Id == journal.AccountTransactionId);
-
-                if (accountTransaction != null)
-                {
-                    // Remove the account transaction
-                    _context.AccountTransactions.Remove(accountTransaction);
-                    _context.SaveChanges();
-                }
-            }
-
-
-            // Update scalar properties
-            _context.Entry(existingJournal).CurrentValues.SetValues(journal);
-
-            // If you have JournalLines (child collection)
-            if (journal.Lines != null)
-            {
-                // Remove deleted lines
-                foreach (var existingLine in existingJournal.Lines.ToList())
-                {
-                    if (!journal.Lines.Any(l => l.JournalEntryId == existingLine.JournalEntryId))
-                    {
-                        _context.JournalEntriesLine.Remove(existingLine);
-                    }
-                }
-
-                // Add or update lines
-                foreach (var line in journal.Lines)
-                {
-                    var existingLine = existingJournal.Lines
-                        .FirstOrDefault(l => l.JournalEntryLineId == line.JournalEntryLineId);
-
-                    if (existingLine != null)
-                    {
-                        _context.Entry(existingLine).CurrentValues.SetValues(line);
-                    }
-                    else
-                    {
-                        existingJournal.Lines.Add(line);
-                    }
-                }
-            }
-
-            await _context.SaveChangesAsync();
-
-            await _journalTransactionService.PostTripToAccountsAsync(existingJournal.JournalEntryId);
 
             return Ok(existingJournal);
         }
@@ -219,15 +136,12 @@ namespace SmartFleetManager.API.Controllers
             _logger.LogInformation("Deleting journal with ID {Id}.", id);
             try
             {
-                var journal = await _context.JournalEntries.FindAsync(id);
-                if (journal == null)
+                var deleted = await _journalTransactionService.DeleteJournalAsync(id);
+                if (!deleted)
                 {
                     _logger.LogWarning("Attempted to delete non-existent journal with ID {Id}.", id);
                     return NotFound();
                 }
-
-                _context.JournalEntries.Remove(journal);
-                await _context.SaveChangesAsync();
 
                 _logger.LogInformation("journal with ID {Id} deleted successfully.", id);
                 return NoContent();
@@ -237,12 +151,6 @@ namespace SmartFleetManager.API.Controllers
                 _logger.LogError(ex, "Error occurred while deleting journal with ID {Id}.", id);
                 return StatusCode(500, $"An error occurred while deleting the journal.{ex.StackTrace}");
             }
-        }
-
-
-        private bool journalExists(int id)
-        {
-            return _context.JournalEntries.Any(e => e.JournalEntryId == id);
         }
     }
 }
