@@ -20,39 +20,19 @@ namespace SmartFleetManager.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TripTransactionView>>> GetTrips(string yearCode)
-        {
-            try { return Ok(await _tripService.GetTripsAsync(yearCode)); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching trip/dispatch."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<ActionResult<IEnumerable<TripTransactionView>>> GetTrips(string yearCode) => Ok(await _tripService.GetTripsAsync(yearCode));
 
         [HttpGet("GetPendingInvoiceTrips")]
-        public async Task<IActionResult> GetPendingInvoiceTrips()
-        {
-            try { return Ok(await _tripService.GetPendingInvoiceTripsAsync()); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching trip/dispatch."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<IActionResult> GetPendingInvoiceTrips() => Ok(await _tripService.GetPendingInvoiceTripsAsync());
 
         [HttpGet("GetLatestTrips")]
-        public async Task<IActionResult> GetRecentTrips()
-        {
-            try { return Ok(new { latestTrips = await _tripService.GetRecentTripsAsync() }); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching recent trips."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<IActionResult> GetRecentTrips() => Ok(new { latestTrips = await _tripService.GetRecentTripsAsync() });
 
         [HttpGet("GetTripReport")]
-        public async Task<IActionResult> GetTripReport([FromQuery] TripReportFilterDto filter)
-        {
-            try { return Ok(await _tripService.GetTripReportAsync(filter)); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching trip report."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<IActionResult> GetTripReport([FromQuery] TripReportFilterDto filter) => Ok(await _tripService.GetTripReportAsync(filter));
 
         [HttpGet("CurrentCode")]
-        public async Task<IActionResult> GetCurrentCode()
-        {
-            try { return Ok(new { CurrentCode = await _tripService.GetCurrentCodeAsync() }); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching current trip Code."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<IActionResult> GetCurrentCode() => Ok(new { CurrentCode = await _tripService.GetCurrentCodeAsync() });
 
         [HttpPost("AccountPosting")]
         public async Task<IActionResult> AccountPosting([FromBody] PostingFilterDTO filter)
@@ -64,65 +44,44 @@ namespace SmartFleetManager.API.Controllers
         }
 
         [HttpGet("PendingOrders/{id}")]
-        public async Task<IActionResult> GetCustomerPendingOrders(int id)
-        {
-            try { return Ok(await _tripService.GetCustomerPendingOrdersAsync(id)); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching pending trips/orders."); return StatusCode(500, $"An error occurred while retrieving data. Error: {ex.Message}"); }
-        }
+        public async Task<IActionResult> GetCustomerPendingOrders(int id) => Ok(await _tripService.GetCustomerPendingOrdersAsync(id));
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TripTransaction>> GetTrip(int id)
         {
-            try
-            {
-                var trip = await _tripService.GetTripAsync(id);
-                return trip == null ? NotFound() : Ok(trip);
-            }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching trip with ID {Id}.", id); return StatusCode(500, "An error occurred while retrieving the trip/dispatch."); }
+            var trip = await _tripService.GetTripAsync(id);
+            return trip == null ? NotFound() : Ok(trip);
         }
 
         [HttpGet("trips")]
-        public async Task<IActionResult> GetTrips([FromQuery] TripReportFilterDto filter)
-        {
-            try { return Ok(await _tripService.GetTripsAsync(filter)); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while fetching trips."); return StatusCode(500, "An error occurred while retrieving data."); }
-        }
+        public async Task<IActionResult> GetTrips([FromQuery] TripReportFilterDto filter) => Ok(await _tripService.GetTripsAsync(filter));
 
         [HttpPost]
         public async Task<ActionResult<TripTransaction>> PostTrip(TripTransaction trip)
         {
+            if (trip == null) return BadRequest("Invalid request data.");
             try
             {
-                if (trip == null) return BadRequest("Invalid request data.");
                 var created = await _tripService.CreateTripAsync(trip);
                 return CreatedAtAction(nameof(GetTrip), new { id = created.Id }, created);
             }
             catch (ArgumentException ex) { return BadRequest(ex.Message); }
             catch (InvalidOperationException ex) { return Conflict(ex.Message); }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while creating a new trip."); return StatusCode(500, "An error occurred while creating the trip."); }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTrip(int id, TripTransaction trip)
         {
             if (id != trip.Id) return BadRequest("Trip ID mismatch");
-            try
-            {
-                if (!await _tripService.UpdateTripAsync(id, trip)) return NotFound();
-                return NoContent();
-            }
-            catch (DbUpdateConcurrencyException ex) { _logger.LogError(ex, "Error occurred while updating trip with ID {Id}.", id); return StatusCode(500, "An error occurred while updating the trip."); }
+            if (!await _tripService.UpdateTripAsync(id, trip)) return NotFound();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrip(int id)
         {
-            try
-            {
-                if (!await _tripService.DeleteTripAsync(id)) return NotFound();
-                return NoContent();
-            }
-            catch (Exception ex) { _logger.LogError(ex, "Error occurred while deleting trip/dispatch with ID {Id}.", id); return StatusCode(500, "An error occurred while deleting the trip/dispatch."); }
+            if (!await _tripService.DeleteTripAsync(id)) return NotFound();
+            return NoContent();
         }
     }
 }
