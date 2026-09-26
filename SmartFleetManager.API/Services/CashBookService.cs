@@ -47,7 +47,7 @@ namespace SmartFleetManager.API.Services
                     d.AccountID == filter.AccountId &&
                     d.AccountTransaction.TransactionDate < fromDate);
 
-            ApplyCommonFilters(openingQuery, filter);
+            openingQuery = ApplyCommonFilters(openingQuery, filter);
 
             var openingBalance = filter.IncludeOpeningBalance
                 ? await openingQuery.SumAsync(d => d.Debit - d.Credit)
@@ -60,7 +60,7 @@ namespace SmartFleetManager.API.Services
                     d.AccountTransaction.TransactionDate >= fromDate &&
                     d.AccountTransaction.TransactionDate < toDateExclusive);
 
-            ApplyCommonFilters(entriesQuery, filter);
+            entriesQuery = ApplyCommonFilters(entriesQuery, filter);
 
             var details = await entriesQuery
                 .OrderBy(d => d.AccountTransaction.TransactionDate)
@@ -130,7 +130,7 @@ namespace SmartFleetManager.API.Services
             };
         }
 
-        private static void ApplyCommonFilters(
+        private static IQueryable<SmartFleet.Data.Models.AccountTransactionDetail> ApplyCommonFilters(
             IQueryable<SmartFleet.Data.Models.AccountTransactionDetail> query,
             CashBookFilterDto filter)
         {
@@ -157,6 +157,8 @@ namespace SmartFleetManager.API.Services
                 query = query.Where(d =>
                     d.AccountTransaction.ReferenceNo.Contains(filter.ReferenceNo));
             }
+
+            return query;
         }
     }
 }
