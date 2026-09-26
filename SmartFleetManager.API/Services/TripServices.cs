@@ -3,6 +3,7 @@ using SmartFleet.Data;
 using SmartFleet.Data.Models;
 using SmartFleetManager.API.Interfaces;
 using SmartFleetManager.API.Models;
+using System.Net.NetworkInformation;
 
 namespace SmartFleetManager.API.Services
 {
@@ -111,8 +112,8 @@ namespace SmartFleetManager.API.Services
                           LRNo=string.Join("/ ",_context.TripConsigneeDetails.Where(x=>x.TripTransactionId==t.Id&&x.LRNo!=null).Select(x=>x.LRNo)),
                           LRDate=t.LRDate,
                           RmtInvoiceNo=string.Join(", ",_context.TripConsigneeDetails.Where(x=>x.TripTransactionId==t.Id&&x.InvoiceNo!=null).Select(x=>x.InvoiceNo)),
-                          ConsigneeName=string.Join(Environment.NewLine,_context.TripConsigneeDetails.Where(x=>x.TripTransactionId==t.Id).Select(x=>(x.ToConsignee!=null?x.ToConsignee.Name:"")+" - "+(x.Destination!=null?x.Destination.Name:"")),
-                          status=t.Status??"",VehicleNo=v.Name,VehicleType=v.VehicleType,Vendor=ve.Name,VendorRentCharges=t.VendorRentCharges??0,
+                          ConsigneeName=string.Join(Environment.NewLine,_context.TripConsigneeDetails.Where(x=>x.TripTransactionId==t.Id).Select(x=>(x.ToConsignee!=null?x.ToConsignee.Name:"")+" - "+(x.Destination!=null?x.Destination.Name:""))),
+                          status = t.Status??"",VehicleNo=v.Name,VehicleType=v.VehicleType,Vendor=ve.Name,VendorRentCharges=t.VendorRentCharges??0,
                           FromLocation=fl.Name,ToLocation=tl.Name,StockistName=s.Name,CustomerName=c.Name,DriverName=d.Name,MTN=t.MtnNo,KMS=t.Kms,
                           Commission=t.CommissionAmt,GoodsValue=t.GoodsValue??0,LRCharges=t.LRCharges??0,HaltingCharges=t.HaltingCharges??0,
                           HandlingCharges=t.HandlingCharges??0,FreightCharges=t.FrieghtCharges??0,DriverCharges=t.DriverBata,FuelCharges=t.FuelCharges,
@@ -246,9 +247,9 @@ namespace SmartFleetManager.API.Services
         public async Task UnpostTripAsync(int tripId)
         {
             var trip=await _context.TripTransaction.FirstOrDefaultAsync(x=>x.Id==tripId);
-            if(trip==null||trip.TransactionReferenceId==null) throw new Exception("Trip not posted.");
-            await _accountTransactionService.ReverseTransactionAsync(trip.TransactionReferenceId.Value,"Admin");
-            trip.TransactionReferenceId=null; trip.TransactionStatus="NotPosted";
+            if(trip==null||trip.TransactionReferenceId == 0) throw new Exception("Trip not posted.");
+            await _accountTransactionService.ReverseTransactionAsync(trip.TransactionReferenceId,"Admin");
+            trip.TransactionReferenceId=0; trip.TransactionStatus="NotPosted";
             await _context.SaveChangesAsync();
         }
     }
