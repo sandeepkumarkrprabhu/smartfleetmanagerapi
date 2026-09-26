@@ -7,3 +7,6 @@
 # Build output - all projects
 **/bin/
 **/obj/
+
+# Local v18 folder
+v18/
