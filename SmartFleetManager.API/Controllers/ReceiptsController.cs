@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartFleet.Data;
+using Microsoft.AspNetCore.Mvc;
 using SmartFleet.Data.Models;
 using SmartFleetManager.API.Interfaces;
 using SmartFleetManager.API.Models;
@@ -11,132 +9,77 @@ namespace SmartFleetManager.API.Controllers
     [ApiController]
     public class ReceiptsController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IAccountTransactionService _transactionService;
+        private readonly IReceiptService _receiptService;
         private readonly ILogger<ReceiptsController> _logger;
 
-        public ReceiptsController(AppDbContext context, ILogger<ReceiptsController> logger, IAccountTransactionService transactionService)
+        public ReceiptsController(
+            IReceiptService receiptService,
+            ILogger<ReceiptsController> logger)
         {
-            _context = context;
+            _receiptService = receiptService;
             _logger = logger;
-            _transactionService = transactionService;
         }
 
-        // GET: api/<ReceiptsController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Receipt>>> GetReceipts(string yearCode)
         {
-            _logger.LogInformation("Fetching all receipts from database.");
+            _logger.LogInformation("Fetching all receipts for year {YearCode}.", yearCode);
             try
             {
-                var Receipts = await _context.Receipts.Where(f => f.IsCancelled == false && f.YearCode == yearCode).ToListAsync();
-                _logger.LogInformation("Fetched {Count} invoices.", Receipts.Count);
-                return Ok(Receipts);
+                return Ok(await _receiptService.GetReceiptsAsync(yearCode));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while fetching comapny branch Receipts.");
-                return StatusCode(500, $"An error occurred while retrieving data.{ex.StackTrace}");
+                _logger.LogError(ex, "Error occurred while fetching receipts.");
+                return StatusCode(500, "An error occurred while retrieving data.");
             }
         }
 
-        // GET api/<GetyearlySummary>
         [HttpGet("GetyearlySummary")]
-        public async Task<ActionResult<Receipt>> GetReceiptsByYear()
+        public async Task<ActionResult<IEnumerable<Receipt>>> GetReceiptsByYear()
         {
-            _logger.LogInformation("Fetching receipts Summary");
+            _logger.LogInformation("Fetching receipts summary.");
             try
             {
-                var payment = await _context.Receipts
-                            .Where(p => p.ReceiptDate.Year == DateTime.Now.Year).ToListAsync();
-
-                if (payment == null)
-                {
-                    _logger.LogWarning("Receipts for current year not found.");
-                    return NotFound();
-                }
-
-                return Ok(payment);
+                return Ok(await _receiptService.GetReceiptsByYearAsync());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while fetching receipts for year.");
-                return StatusCode(500, $"An error occurred while retrieving the yearly receipts.{ex.StackTrace}");
+                return StatusCode(500, "An error occurred while retrieving the yearly receipts.");
             }
         }
 
-        // GET api/<ReceiptsController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Receipt>> GetReceiptsById(int id)
         {
-            _logger.LogInformation("Fetching Receipts with ID {Id}.", id);
+            _logger.LogInformation("Fetching receipt with ID {Id}.", id);
             try
             {
-                var Receipt = await _context.Receipts
-                            .Include(t => t.Details)
-                            .ThenInclude(d => d.InvoiceAllocations)
-                            .FirstOrDefaultAsync(t => t.Id == id);
-
-                if (Receipt == null)
-                {
-                    _logger.LogWarning("Receipts with ID {Id} not found.", id);
-                    return NotFound();
-                }
-
-                return Ok(Receipt);
+                var receipt = await _receiptService.GetReceiptByIdAsync(id);
+                return receipt == null ? NotFound() : Ok(receipt);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while fetching Receipt with ID {Id}.", id);
-                return StatusCode(500, $"An error occurred while retrieving the Receipt.{ex.StackTrace}");
+                _logger.LogError(ex, "Error occurred while fetching receipt with ID {Id}.", id);
+                return StatusCode(500, "An error occurred while retrieving the receipt.");
             }
         }
 
-        [HttpGet("GetReceiptForPosting/{id}")]
-        private async Task<Receipt?> GetReceiptForPosting(int id)
-        {
-            _logger.LogInformation("Fetching Receipts with ID {Id}.", id);
-            try
-            {
-                var receipt = await _context.Receipts
-                            .Include(t => t.Details)
-                            .FirstOrDefaultAsync(t => t.Id == id);
-
-                if (receipt == null)
-                {
-                    _logger.LogWarning("Receipts with ID {Id} not found.", id);
-                    return null;
-                }
-
-                return receipt;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while fetching Receipt with ID {Id}.", id);
-                return null;
-            }
-        }
-
-        // GET: api/<CustomerController>
         [HttpGet("CurrentCode/{yearCode}")]
-        public async Task<ActionResult<IEnumerable<int>>> GetCurrentCode(string yearCode)
+        public async Task<IActionResult> GetCurrentCode(string yearCode)
         {
-            _logger.LogInformation("Fetching current/last Receipt code from database.");
-            if (string.IsNullOrEmpty(yearCode))
-            {
-                _logger.LogWarning("YearCode missing. Error occurred while fetching current Receipt Code.");
+            if (string.IsNullOrWhiteSpace(yearCode))
                 return StatusCode(405, "An error occurred while generating next receipt number.");
-            }
+
             try
             {
-                var currentCode = await _context.Receipts.Where(f => f.YearCode == yearCode).OrderByDescending(p => p.Id)
-                        .Select(s => (int?)s.receiptNo).FirstOrDefaultAsync() ?? 0;
-                _logger.LogInformation("Fetched {currentCode} for Receipt.", currentCode);
+                var currentCode = await _receiptService.GetCurrentCodeAsync(yearCode);
                 return Ok(new { CurrentCode = currentCode });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while fetching current Receipt Code.");
+                _logger.LogError(ex, "Error occurred while fetching current receipt code.");
                 return StatusCode(500, "An error occurred while retrieving data.");
             }
         }
@@ -144,244 +87,116 @@ namespace SmartFleetManager.API.Controllers
         [HttpPost("AccountPosting")]
         public async Task<IActionResult> AccountPosting([FromBody] PostingFilterDTO filter)
         {
-            var receipts = await _context.Receipts
-                .Include(i => i.Details)
-                .Where(p => (p.ReceiptDate >= filter.StartDate.Date &&
-                            p.ReceiptDate <= filter.EndDate.Date) && p.AccountStatus != "Posted" && p.IsCancelled == false).ToListAsync();
-
-            if (!receipts.Any())
+            try
             {
-                return NotFound("No receipts found for the selected date range.");
-            }
+                var receipts = await _receiptService.GetReceiptsForPostingAsync(filter);
 
-            foreach (var receipt in receipts)
-            {
-                if (receipt != null)
+                if (!receipts.Any())
+                    return NotFound("No receipts found for the selected date range.");
+
+                foreach (var receipt in receipts)
+                    await _receiptService.PostReceiptToAccountsAsync(receipt.Id);
+
+                return Ok(new
                 {
-                    await _transactionService.CreateReceiptTransactionAsync(receipt);
-                }
+                    Message = "Receipt posting completed",
+                    Count = receipts.Count
+                });
             }
-
-            return Ok(new
+            catch (Exception ex)
             {
-                Message = "Receipt posting completed",
-                Count = receipts.Count
-            });
+                _logger.LogError(ex, "Error occurred while posting receipts to accounting.");
+                return StatusCode(500, "An error occurred while posting receipts.");
+            }
         }
 
         [HttpPost("AccoutPosting/{receiptId}")]
         public async Task<IActionResult> PostBillToAccounting(int receiptId)
         {
-            // Load the bill from DB
-            var receipt = await GetReceiptForPosting(receiptId);
-            if (receipt == null)
-                return NotFound($"Bill with Id {receiptId} not found.");
-
-            if (receipt.AccountStatus == "Posted")
-                return BadRequest("Bill is already posted to accounting.");
-
-            // Post to accounting
-            await _transactionService.CreateReceiptTransactionAsync(receipt);
-
-            return Ok(new { BillId = receiptId });
+            try
+            {
+                await _receiptService.PostReceiptToAccountsAsync(receiptId);
+                return Ok(new { BillId = receiptId });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound($"Receipt with Id {receiptId} not found.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while posting receipt {Id}.", receiptId);
+                return StatusCode(500, "An error occurred while posting the receipt.");
+            }
         }
 
-        // POST api/<ReceiptsController>
         [HttpPost]
         public async Task<ActionResult<Receipt>> PostReceipts(Receipt receipt)
         {
-            _logger.LogInformation("Creating a new Receipt.");
+            _logger.LogInformation("Creating a new receipt.");
             try
             {
-                _context.Receipts.Add(receipt);
-                await _context.SaveChangesAsync();
+                var created = await _receiptService.CreateReceiptAsync(receipt);
 
-                await _transactionService.CreateReceiptTransactionAsync(receipt);
-
-                _logger.LogInformation("Receipt created with ID {Id}.", receipt.Id);
-                return CreatedAtAction(nameof(GetReceiptsById), new { id = receipt.Id }, receipt);
+                return CreatedAtAction(
+                    nameof(GetReceiptsById),
+                    new { id = created.Id },
+                    created);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while creating a new Receipt.");
-                return StatusCode(500, $"An error occurred while posting the Receipt.{ex.StackTrace}");
+                _logger.LogError(ex, "Error occurred while creating receipt.");
+                return StatusCode(500, "An error occurred while posting the receipt.");
             }
         }
 
-        // PUT api/<ReceiptsController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReceipt(int id, Receipt receipt)
         {
-            _logger.LogInformation("Updating receipt with ID {Id}.", id);
-
             if (id != receipt.Id)
                 return BadRequest("Receipt ID mismatch");
 
-            var existingReceipt = await _context.Receipts
-                .Include(r => r.Details)
-                    .ThenInclude(d => d.InvoiceAllocations)
-                .FirstOrDefaultAsync(r => r.Id == id);
-
-            if (existingReceipt == null)
-                return NotFound();
-
-            // =========================================
-            // 1️ Delete AccountTransaction
-            // =========================================
-            if (receipt.AccountStatus == "Posted")
-            {
-                // Find the transaction by TransactionReferenceId
-                var accountTransaction = await _context.AccountTransactions
-                    .FirstOrDefaultAsync(t => t.Id == receipt.AccountTransactionId);
-
-                if (accountTransaction != null)
-                {
-                    // Remove the account transaction
-                    _context.AccountTransactions.Remove(accountTransaction);
-                    _context.SaveChanges();
-                }
-            }
-
-            // ==========================
-            // Update header fields
-            // ==========================
-            receipt.AccountTransactionId = 0;
-            receipt.AccountStatus = "Draft";
-            _context.Entry(existingReceipt).CurrentValues.SetValues(receipt);
-
-
-            // =====================================================
-            // HANDLE RECEIPT DETAILS
-            // =====================================================
-            if (receipt.Details != null)
-            {
-                // 1️⃣ REMOVE deleted details
-                foreach (var existingDetail in existingReceipt.Details.ToList())
-                {
-                    if (!receipt.Details.Any(d => d.Id == existingDetail.Id))
-                    {
-                        // Remove allocations first (safe if no cascade)
-                        _context.ReceiptAllocations.RemoveRange(existingDetail.InvoiceAllocations);
-
-                        _context.ReceiptsDetail.Remove(existingDetail);
-                    }
-                }
-
-                // 2️⃣ ADD / UPDATE details
-                foreach (var detail in receipt.Details)
-                {
-                    var existingDetail = existingReceipt.Details
-                        .FirstOrDefault(d => d.Id == detail.Id);
-
-                    if (existingDetail != null)
-                    {
-                        // Update detail scalar properties
-                        _context.Entry(existingDetail).CurrentValues.SetValues(detail);
-
-                        // ========================================
-                        // HANDLE INVOICE ALLOCATIONS
-                        // ========================================
-                        if (detail.InvoiceAllocations != null)
-                        {
-                            // REMOVE deleted allocations
-                            foreach (var existingAllocation in existingDetail.InvoiceAllocations.ToList())
-                            {
-                                if (!detail.InvoiceAllocations
-                                    .Any(a => a.Id == existingAllocation.Id))
-                                {
-                                    _context.ReceiptAllocations.Remove(existingAllocation);
-                                }
-                            }
-
-                            // ADD / UPDATE allocations
-                            foreach (var allocation in detail.InvoiceAllocations)
-                            {
-                                var existingAllocation = existingDetail.InvoiceAllocations
-                                    .FirstOrDefault(a => a.Id == allocation.Id);
-
-                                if (existingAllocation != null)
-                                {
-                                    _context.Entry(existingAllocation)
-                                        .CurrentValues
-                                        .SetValues(allocation);
-                                }
-                                else
-                                {
-                                    // Ensure FK is set correctly
-                                    allocation.Id = 0;
-                                    allocation.ReceiptDetailId = existingDetail.Id;
-
-                                    existingDetail.InvoiceAllocations.Add(allocation);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // New Detail
-                        detail.Id = 0;
-                        detail.ReceiptId = existingReceipt.Id;
-
-                        if (detail.InvoiceAllocations != null)
-                        {
-                            foreach (var allocation in detail.InvoiceAllocations)
-                            {
-                                allocation.Id = 0;
-                            }
-                        }
-
-                        existingReceipt.Details.Add(detail);
-                    }
-                }
-            }
-
-            await _context.SaveChangesAsync();
-
-            var receiptDet = _context.Receipts.Where(f => f.Id == receipt.Id).FirstOrDefault();
-
-
-            await _transactionService.CreateReceiptTransactionAsync(receiptDet);
-
-            return Ok(existingReceipt);
-        }
-
-        // DELETE api/<ReceiptsController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReceipt(int id)
-        {
-            _logger.LogInformation("Deleting Receipt with ID {Id}.", id);
             try
             {
-                var receipt = await _context.Receipts.FindAsync(id);
-                if (receipt == null)
-                {
-                    _logger.LogWarning("Attempted to delete non-existent Receipt with ID {Id}.", id);
+                var updated = await _receiptService.UpdateReceiptAsync(id, receipt);
+
+                if (updated == null)
                     return NotFound();
-                }
-                
-                if (receipt.AccountStatus == "Posted")
-                {
-                    var msg = $"Receipt is posted to accounts with {receipt.AccountTransactionId}. Receipt cannot be cancelled.";
-                    _logger.LogWarning(msg);
-                    return BadRequest(new { error = msg });
-                }
 
-                _context.Receipts.Remove(receipt);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Receipt with ID {Id} deleted successfully.", id);
-                return NoContent();
+                return Ok(updated);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while deleting Receipt with ID {Id}.", id);
-                return StatusCode(500, $"An error occurred while deleting the Receipt.{ex.StackTrace}");
+                _logger.LogError(ex, "Error occurred while updating receipt with ID {Id}.", id);
+                return StatusCode(500, "An error occurred while updating the receipt.");
             }
         }
 
-        private bool InvoiceExists(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReceipt(int id)
         {
-            return _context.Receipts.Any(e => e.Id == id);
+            _logger.LogInformation("Deleting receipt with ID {Id}.", id);
+            try
+            {
+                var deleted = await _receiptService.DeleteReceiptAsync(id);
+
+                if (!deleted)
+                    return NotFound();
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting receipt with ID {Id}.", id);
+                return StatusCode(500, "An error occurred while deleting the receipt.");
+            }
         }
     }
 }
