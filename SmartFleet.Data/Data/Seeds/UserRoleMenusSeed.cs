@@ -30,7 +30,16 @@ namespace SmartFleet.Data.Data.Seeds
                 new UserRoleMenu{ Id = 18, RoleId = 1, MenuId = 17, OrderId = 1, IsActive = true},
                 new UserRoleMenu{ Id = 19, RoleId = 1, MenuId = 18, OrderId = 1, IsActive = true},
                 new UserRoleMenu{ Id = 20, RoleId = 1, MenuId = 19, OrderId = 1, IsActive = true},
-                new UserRoleMenu{ Id = 21, RoleId = 2,  MenuId = 20, OrderId = 1, IsActive = true}
+                new UserRoleMenu{ Id = 21, RoleId = 2,  MenuId = 20, OrderId = 1, IsActive = true},
+                new UserRoleMenu{ Id = 22, RoleId = 1, MenuId = 21, OrderId = 2, IsActive = true},
+                new UserRoleMenu{ Id = 23, RoleId = 1, MenuId = 32, OrderId = 3, IsActive = true},
+                new UserRoleMenu{ Id = 24, RoleId = 1, MenuId = 33, OrderId = 4, IsActive = true},
+                new UserRoleMenu{ Id = 25, RoleId = 1, MenuId = 34, OrderId = 5, IsActive = true},
+                new UserRoleMenu{ Id = 26, RoleId = 1, MenuId = 35, OrderId = 6, IsActive = true},
+                new UserRoleMenu{ Id = 27, RoleId = 1, MenuId = 36, OrderId = 7, IsActive = true},
+                new UserRoleMenu{ Id = 28, RoleId = 1, MenuId = 37, OrderId = 8, IsActive = true},
+                new UserRoleMenu{ Id = 29, RoleId = 1, MenuId = 38, OrderId = 9, IsActive = true},
+                new UserRoleMenu{ Id = 30, RoleId = 1, MenuId = 39, OrderId = 10, IsActive = true}
             );
         }
     }
