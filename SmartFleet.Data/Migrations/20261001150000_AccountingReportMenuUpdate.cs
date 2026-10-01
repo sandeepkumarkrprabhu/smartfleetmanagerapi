@@ -60,7 +60,7 @@ IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId 
 SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Balance Sheet';
 IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
     INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
-    VALUES (0, 0, 0, 0, 0, 0, 1, @MenuId, 4, 1);
+    VALUES (0, 0, 0, 0, 0, 1, @MenuId, 4, 1);
 
 SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Posting';
 IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
