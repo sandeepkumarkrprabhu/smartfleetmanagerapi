@@ -16,9 +16,9 @@ namespace SmartFleetManager.API.Controllers
             _dashboardService = dashboardService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<AccountsDashboardDto>> Get(
-            [FromQuery] AccountsDashboardFilterDto filter)
+            [FromBody] AccountsDashboardFilterDto filter)
         {
             try
             {
