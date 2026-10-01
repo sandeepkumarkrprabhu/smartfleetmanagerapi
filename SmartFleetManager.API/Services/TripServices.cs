@@ -179,9 +179,9 @@ namespace SmartFleetManager.API.Services
 
         public async Task<TripTransaction> CreateTripAsync(TripTransaction trip)
         {
-            var name=trip.ReferenceNo?.Trim();
-            if(string.IsNullOrWhiteSpace(name)) throw new ArgumentException("trip LR No is required.");
-            if(await _context.TripConsigneeDetails.AnyAsync(c=>c.LRNo.Contains(name))) throw new InvalidOperationException("trip with LR No already exists.");
+            var lrNo=trip.ReferenceNo?.Trim();
+            if(string.IsNullOrWhiteSpace(lrNo)) throw new ArgumentException("trip LR No is required.");
+            if(await _context.TripConsigneeDetails.AnyAsync(c=>c.LRNo == lrNo)) throw new InvalidOperationException("trip with LR No already exists.");
             _context.TripTransaction.Add(trip);
             await _context.SaveChangesAsync();
             await PostTripToAccountsAsync(trip.Id);
