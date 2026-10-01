@@ -2374,12 +2374,45 @@ namespace SmartFleet.Data.Migrations
                         {
                             MenuID = 36,
                             GroupId = 4,
-                            IconName = "WalletCards",
+                            IconName = "Landmark",
                             ModuleID = 2,
-                            Name = "Cash Book",
+                            Name = "Cash & Bank Reports",
                             isActive = true,
                             orderNo = 2,
-                            url = "/accounts/CashBook"
+                            url = "/accounts/CashBankReports"
+                        },
+                        new
+                        {
+                            MenuID = 37,
+                            GroupId = 4,
+                            IconName = "ArrowLeftRight",
+                            ModuleID = 2,
+                            Name = "Receivables & Payable Reports",
+                            isActive = true,
+                            orderNo = 3,
+                            url = "/accounts/ReceivablePayableReports"
+                        },
+                        new
+                        {
+                            MenuID = 38,
+                            GroupId = 4,
+                            IconName = "ReceiptText",
+                            ModuleID = 2,
+                            Name = "Tax Reports",
+                            isActive = true,
+                            orderNo = 4,
+                            url = "/accounts/TaxReports"
+                        },
+                        new
+                        {
+                            MenuID = 39,
+                            GroupId = 4,
+                            IconName = "ChartNoAxesCombined",
+                            ModuleID = 2,
+                            Name = "Management Analysis",
+                            isActive = true,
+                            orderNo = 5,
+                            url = "/accounts/ManagementAnalysis"
                         });
                 });
 
@@ -3773,7 +3806,10 @@ namespace SmartFleet.Data.Migrations
                             MenuId = 36,
                             OrderId = 7,
                             RoleId = 1
-                        });
+                        },
+                        new { Id = 28, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 37, OrderId = 8, RoleId = 1 },
+                        new { Id = 29, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 38, OrderId = 9, RoleId = 1 },
+                        new { Id = 30, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 39, OrderId = 10, RoleId = 1 });
                 });
 
             modelBuilder.Entity("SmartFleet.Data.Models.Vehicle", b =>
