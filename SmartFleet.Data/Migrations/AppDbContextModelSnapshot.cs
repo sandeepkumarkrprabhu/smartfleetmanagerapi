@@ -2369,6 +2369,17 @@ namespace SmartFleet.Data.Migrations
                             isActive = true,
                             orderNo = 1,
                             url = "/accounts/AccountsStatement"
+                        },
+                        new
+                        {
+                            MenuID = 36,
+                            GroupId = 4,
+                            IconName = "WalletCards",
+                            ModuleID = 2,
+                            Name = "Cash Book",
+                            isActive = true,
+                            orderNo = 2,
+                            url = "/accounts/CashBook"
                         });
                 });
 
@@ -3684,6 +3695,84 @@ namespace SmartFleet.Data.Migrations
                             MenuId = 20,
                             OrderId = 1,
                             RoleId = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 21,
+                            OrderId = 2,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 32,
+                            OrderId = 3,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 33,
+                            OrderId = 4,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 34,
+                            OrderId = 5,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 35,
+                            OrderId = 6,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            HasAddPermission = false,
+                            HasDeletePermission = false,
+                            HasEditPermission = false,
+                            HasPostingPermission = false,
+                            HasPrintPermission = false,
+                            IsActive = true,
+                            MenuId = 36,
+                            OrderId = 7,
+                            RoleId = 1
                         });
                 });
 
