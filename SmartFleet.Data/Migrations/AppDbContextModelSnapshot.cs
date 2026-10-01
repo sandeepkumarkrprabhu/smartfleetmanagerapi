@@ -2369,50 +2369,6 @@ namespace SmartFleet.Data.Migrations
                             isActive = true,
                             orderNo = 1,
                             url = "/accounts/AccountsStatement"
-                        },
-                        new
-                        {
-                            MenuID = 36,
-                            GroupId = 4,
-                            IconName = "Landmark",
-                            ModuleID = 2,
-                            Name = "Cash & Bank Reports",
-                            isActive = true,
-                            orderNo = 2,
-                            url = "/accounts/CashBankReports"
-                        },
-                        new
-                        {
-                            MenuID = 37,
-                            GroupId = 4,
-                            IconName = "ArrowLeftRight",
-                            ModuleID = 2,
-                            Name = "Receivables & Payable Reports",
-                            isActive = true,
-                            orderNo = 3,
-                            url = "/accounts/ReceivablePayableReports"
-                        },
-                        new
-                        {
-                            MenuID = 38,
-                            GroupId = 4,
-                            IconName = "ReceiptText",
-                            ModuleID = 2,
-                            Name = "Tax Reports",
-                            isActive = true,
-                            orderNo = 4,
-                            url = "/accounts/TaxReports"
-                        },
-                        new
-                        {
-                            MenuID = 39,
-                            GroupId = 4,
-                            IconName = "ChartNoAxesCombined",
-                            ModuleID = 2,
-                            Name = "Management Analysis",
-                            isActive = true,
-                            orderNo = 5,
-                            url = "/accounts/ManagementAnalysis"
                         });
                 });
 
@@ -3728,88 +3684,8 @@ namespace SmartFleet.Data.Migrations
                             MenuId = 20,
                             OrderId = 1,
                             RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 22,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 21,
-                            OrderId = 2,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 23,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 32,
-                            OrderId = 3,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 24,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 33,
-                            OrderId = 4,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 25,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 34,
-                            OrderId = 5,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 26,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 35,
-                            OrderId = 6,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 27,
-                            HasAddPermission = false,
-                            HasDeletePermission = false,
-                            HasEditPermission = false,
-                            HasPostingPermission = false,
-                            HasPrintPermission = false,
-                            IsActive = true,
-                            MenuId = 36,
-                            OrderId = 7,
-                            RoleId = 1
-                        },
-                        new { Id = 28, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 37, OrderId = 8, RoleId = 1 },
-                        new { Id = 29, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 38, OrderId = 9, RoleId = 1 },
-                        new { Id = 30, HasAddPermission = false, HasDeletePermission = false, HasEditPermission = false, HasPostingPermission = false, HasPrintPermission = false, IsActive = true, MenuId = 39, OrderId = 10, RoleId = 1 });
+                        }
+                        });
                 });
 
             modelBuilder.Entity("SmartFleet.Data.Models.Vehicle", b =>
