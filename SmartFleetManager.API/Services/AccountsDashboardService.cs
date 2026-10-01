@@ -152,13 +152,53 @@ namespace SmartFleetManager.API.Services
                 monthCursor = monthCursor.AddMonths(1);
             }
 
+            var recentTransactions = await (
+                from d in _context.AccountTransactionDetails.AsNoTracking()
+                join h in _context.AccountTransactions.AsNoTracking()
+                    on d.TransactionId equals h.Id
+                join a in _context.AccountMasters.AsNoTracking()
+                    on d.AccountID equals a.AccountID
+                where h.AccountingStatus == "Posted"
+                      && h.TransactionDate < toDateExclusive
+                      && (filter.BranchId == null || h.branchId == filter.BranchId)
+                      && (string.IsNullOrWhiteSpace(filter.YearCode) || h.YearCode == filter.YearCode)
+                orderby h.TransactionDate descending, d.Id descending
+                select new
+                {
+                    h.TransactionDate,
+                    h.DocumentType,
+                    h.ReferenceNo,
+                    d.Narration,
+                    a.AccountName,
+                    a.AccountType,
+                    Amount = d.BaseDebit + d.BaseCredit
+                })
+                .Take(10)
+                .ToListAsync();
+
+            var recentTransactionDtos = recentTransactions
+                .Select(x => new RecentTransactionDto
+                {
+                    Date = x.TransactionDate,
+                    Description = string.IsNullOrWhiteSpace(x.Narration)
+                        ? $"{x.DocumentType} {x.ReferenceNo}".Trim()
+                        : x.Narration,
+                    AccountName = x.AccountName,
+                    Amount = (x.AccountType == FleetConstants.EXPENSE_TYPE_NAME
+                              || x.AccountType == FleetConstants.LIABILITY_TYPE_NAME
+                              ? "-"
+                              : "+") + Math.Abs(x.Amount).ToString("N2", CultureInfo.InvariantCulture)
+                })
+                .ToList();
+
             return new AccountsDashboardDto
             {
                 TotalAssets = totalAssets,
                 TotalLiabilities = totalLiabilities,
                 CashAndBank = cashAndBank,
                 ProfitLoss = monthlyFinancials.Sum(x => x.ProfitLoss),
-                MonthlyFinancials = monthlyFinancials
+                MonthlyFinancials = monthlyFinancials,
+                RecentTransactions = recentTransactionDtos
             };
         }
     }
