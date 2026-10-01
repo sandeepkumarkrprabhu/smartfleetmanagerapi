@@ -8,41 +8,117 @@ namespace SmartFleet.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
-                table: "MenuMasters",
-                columns: new[] { "MenuID", "GroupId", "IconName", "ModuleID", "Name", "isActive", "orderNo", "url" },
-                values: new object[,]
-                {
-                    { 36, 4, "Landmark", 2, "Cash & Bank Reports", true, 2, "/accounts/CashBankReports" },
-                    { 37, 4, "ArrowLeftRight", 2, "Receivables & Payable Reports", true, 3, "/accounts/ReceivablePayableReports" },
-                    { 38, 4, "ReceiptText", 2, "Tax Reports", true, 4, "/accounts/TaxReports" },
-                    { 39, 4, "ChartNoAxesCombined", 2, "Management Analysis", true, 5, "/accounts/ManagementAnalysis" }
-                });
+            migrationBuilder.Sql(@"
+DECLARE @CashBankMenuId INT;
+DECLARE @ReceivablesPayableMenuId INT;
+DECLARE @TaxReportsMenuId INT;
+DECLARE @ManagementAnalysisMenuId INT;
+DECLARE @MenuId INT;
 
-            migrationBuilder.InsertData(
-                table: "UserRoleMenus",
-                columns: new[] { "Id", "HasAddPermission", "HasDeletePermission", "HasEditPermission", "HasPostingPermission", "HasPrintPermission", "IsActive", "MenuId", "OrderId", "RoleId" },
-                values: new object[,]
-                {
-                    { 22, false, false, false, false, false, true, 21, 2, 1 },
-                    { 23, false, false, false, false, false, true, 32, 3, 1 },
-                    { 24, false, false, false, false, false, true, 33, 4, 1 },
-                    { 25, false, false, false, false, false, true, 34, 5, 1 },
-                    { 26, false, false, false, false, false, true, 35, 6, 1 },
-                    { 27, false, false, false, false, false, true, 36, 7, 1 },
-                    { 28, false, false, false, false, false, true, 37, 8, 1 },
-                    { 29, false, false, false, false, false, true, 38, 9, 1 },
-                    { 30, false, false, false, false, false, true, 39, 10, 1 }
-                });
+SELECT @CashBankMenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Cash & Bank Reports';
+IF @CashBankMenuId IS NULL
+BEGIN
+    INSERT INTO MenuMasters (GroupId, IconName, ModuleID, Name, isActive, orderNo, url)
+    VALUES (4, N'Landmark', 2, N'Cash & Bank Reports', 1, 2, N'/accounts/CashBankReports');
+    SET @CashBankMenuId = CONVERT(INT, SCOPE_IDENTITY());
+END;
+
+SELECT @ReceivablesPayableMenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Receivables & Payable Reports';
+IF @ReceivablesPayableMenuId IS NULL
+BEGIN
+    INSERT INTO MenuMasters (GroupId, IconName, ModuleID, Name, isActive, orderNo, url)
+    VALUES (4, N'ArrowLeftRight', 2, N'Receivables & Payable Reports', 1, 3, N'/accounts/ReceivablePayableReports');
+    SET @ReceivablesPayableMenuId = CONVERT(INT, SCOPE_IDENTITY());
+END;
+
+SELECT @TaxReportsMenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Tax Reports';
+IF @TaxReportsMenuId IS NULL
+BEGIN
+    INSERT INTO MenuMasters (GroupId, IconName, ModuleID, Name, isActive, orderNo, url)
+    VALUES (4, N'ReceiptText', 2, N'Tax Reports', 1, 4, N'/accounts/TaxReports');
+    SET @TaxReportsMenuId = CONVERT(INT, SCOPE_IDENTITY());
+END;
+
+SELECT @ManagementAnalysisMenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Management Analysis';
+IF @ManagementAnalysisMenuId IS NULL
+BEGIN
+    INSERT INTO MenuMasters (GroupId, IconName, ModuleID, Name, isActive, orderNo, url)
+    VALUES (4, N'ChartNoAxesCombined', 2, N'Management Analysis', 1, 5, N'/accounts/ManagementAnalysis');
+    SET @ManagementAnalysisMenuId = CONVERT(INT, SCOPE_IDENTITY());
+END;
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Trail Balance';
+IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @MenuId, 2, 1);
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Profit & Loss A/c';
+IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @MenuId, 3, 1);
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Balance Sheet';
+IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 0, 1, @MenuId, 4, 1);
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Posting';
+IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @MenuId, 5, 1);
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Account Statement';
+IF @MenuId IS NOT NULL AND NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @MenuId, 6, 1);
+
+IF NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @CashBankMenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @CashBankMenuId, 7, 1);
+
+IF NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @ReceivablesPayableMenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @ReceivablesPayableMenuId, 8, 1);
+
+IF NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @TaxReportsMenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @TaxReportsMenuId, 9, 1);
+
+IF NOT EXISTS (SELECT 1 FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @ManagementAnalysisMenuId)
+    INSERT INTO UserRoleMenus (HasAddPermission, HasDeletePermission, HasEditPermission, HasPostingPermission, HasPrintPermission, IsActive, MenuId, OrderId, RoleId)
+    VALUES (0, 0, 0, 0, 0, 1, @ManagementAnalysisMenuId, 10, 1);
+");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            for (var id = 22; id <= 30; id++)
-                migrationBuilder.DeleteData(table: "UserRoleMenus", keyColumn: "Id", keyValue: id);
+            migrationBuilder.Sql(@"
+DECLARE @MenuId INT;
 
-            for (var menuId = 36; menuId <= 39; menuId++)
-                migrationBuilder.DeleteData(table: "MenuMasters", keyColumn: "MenuID", keyValue: menuId);
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Management Analysis';
+DELETE FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId;
+DELETE FROM MenuMasters WHERE MenuID = @MenuId;
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Tax Reports';
+DELETE FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId;
+DELETE FROM MenuMasters WHERE MenuID = @MenuId;
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Receivables & Payable Reports';
+DELETE FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId;
+DELETE FROM MenuMasters WHERE MenuID = @MenuId;
+
+SELECT @MenuId = MenuID FROM MenuMasters WHERE ModuleID = 2 AND Name = N'Cash & Bank Reports';
+DELETE FROM UserRoleMenus WHERE RoleId = 1 AND MenuId = @MenuId;
+DELETE FROM MenuMasters WHERE MenuID = @MenuId;
+
+DELETE urm
+FROM UserRoleMenus urm
+INNER JOIN MenuMasters mm ON mm.MenuID = urm.MenuId
+WHERE urm.RoleId = 1
+  AND mm.ModuleID = 2
+  AND mm.Name IN (N'Account Statement', N'Posting', N'Balance Sheet', N'Profit & Loss A/c', N'Trail Balance');
+");
         }
     }
 }
