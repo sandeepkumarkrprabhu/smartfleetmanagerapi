@@ -3684,7 +3684,6 @@ namespace SmartFleet.Data.Migrations
                             MenuId = 20,
                             OrderId = 1,
                             RoleId = 2
-                        }
                         });
                 });
 
