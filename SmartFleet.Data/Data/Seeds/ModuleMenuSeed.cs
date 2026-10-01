@@ -36,11 +36,7 @@ namespace SmartFleet.Data.Data.Seeds
                 new MenuMaster { MenuID = 32, ModuleID = 2, Name = "Profit & Loss A/c", orderNo = 1, isActive = true, url = "/accounts/ProfitLossAcc", GroupId = 4, IconName = "LineChart" },
                 new MenuMaster { MenuID = 33, ModuleID = 2, Name = "Balance Sheet", orderNo = 1, isActive = true, url = "/accounts/BalanceSheet", GroupId = 4, IconName = "Landmark" },
                 new MenuMaster { MenuID = 34, ModuleID = 2, Name = "Posting", orderNo = 1, isActive = true, url = "/accounts/BulkPosting", GroupId = 4, IconName = "ClipboardCheck" },
-                new MenuMaster { MenuID = 35, ModuleID = 2, Name = "Account Statement", orderNo = 1, isActive = true, url = "/accounts/AccountsStatement", GroupId = 4, IconName = "FileText" },
-                new MenuMaster { MenuID = 36, ModuleID = 2, Name = "Cash & Bank Reports", orderNo = 2, isActive = true, url = "/accounts/CashBankReports", GroupId = 4, IconName = "Landmark" },
-                new MenuMaster { MenuID = 37, ModuleID = 2, Name = "Receivables & Payable Reports", orderNo = 3, isActive = true, url = "/accounts/ReceivablePayableReports", GroupId = 4, IconName = "ArrowLeftRight" },
-                new MenuMaster { MenuID = 38, ModuleID = 2, Name = "Tax Reports", orderNo = 4, isActive = true, url = "/accounts/TaxReports", GroupId = 4, IconName = "ReceiptText" },
-                new MenuMaster { MenuID = 39, ModuleID = 2, Name = "Management Analysis", orderNo = 5, isActive = true, url = "/accounts/ManagementAnalysis", GroupId = 4, IconName = "ChartNoAxesCombined" }
+                new MenuMaster { MenuID = 35, ModuleID = 2, Name = "Account Statement", orderNo = 1, isActive = true, url = "/accounts/AccountsStatement", GroupId = 4, IconName = "FileText" }
             );
         }
 
