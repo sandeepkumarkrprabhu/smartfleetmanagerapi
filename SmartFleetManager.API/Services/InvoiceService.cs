@@ -61,6 +61,7 @@ namespace SmartFleetManager.API.Services
                 join bc in _context.Customers on b.CustomerId equals bc.Id
                 join l in _context.Locations on t.OriginId equals l.Id
                 where b.Id == id
+                orderby t.LRDate
                 select new MonthlyInvoiceSummaryPrint
                 {
                     CompanyName = companyDetail.Name ?? "", CompanyAddress = companyDetail.Address,
@@ -126,6 +127,7 @@ namespace SmartFleetManager.API.Services
                 join o in _context.Locations on bd.OriginId equals o.Id
                 join d in _context.Locations on bd.DestinationId equals d.Id
                 where bd.BTId == id
+                orderby t.LRDate 
                 select new CustomerInvoiceDetail
                 {
                     LRDate = t.LRDate, FromCustomerName = t.FromCustomer.Name ?? "", ToCustomerName = t.ToCustomer.Name ?? "",

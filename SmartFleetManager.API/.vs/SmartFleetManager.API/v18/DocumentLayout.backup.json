@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|d:\\personal files\\projects\\fleetmanagement\\fleet-manager-api\\smartfleetmanager.api\\services\\tripservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|solutionrelative:services\\tripservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|d:\\personal files\\projects\\fleetmanagement\\fleet-manager-api\\smartfleetmanager.api\\controllers\\tripcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|solutionrelative:controllers\\tripcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|d:\\personal files\\projects\\fleetmanagement\\fleet-manager-api\\smartfleetmanager.api\\controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6D101104-8BA0-49CC-853D-F0B53B7C0EFB}|SmartFleetManager.API.csproj|solutionrelative:controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,21 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 126,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TripServices.cs",
-              "DocumentMoniker": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Services\\TripServices.cs",
-              "RelativeDocumentMoniker": "Services\\TripServices.cs",
-              "ToolTip": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Services\\TripServices.cs",
-              "RelativeToolTip": "Services\\TripServices.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAAApwLcAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-01T06:36:01.215Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
@@ -51,15 +34,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TripController.cs",
-              "DocumentMoniker": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Controllers\\TripController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TripController.cs",
-              "ToolTip": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Controllers\\TripController.cs",
-              "RelativeToolTip": "Controllers\\TripController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAArwEAAAAA5AAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "BillController.cs",
+              "DocumentMoniker": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Controllers\\BillController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BillController.cs",
+              "ToolTip": "D:\\personal files\\Projects\\fleetmanagement\\fleet-manager-api\\SmartFleetManager.API\\Controllers\\BillController.cs",
+              "RelativeToolTip": "Controllers\\BillController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-01T06:35:39.728Z",
+              "WhenOpened": "2026-10-01T07:15:20.76Z",
               "EditorCaption": ""
             }
           ]
