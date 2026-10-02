@@ -3,8 +3,12 @@
 ################################################################################
 
 *.vsidx
+*.suo
 .vs/
 **/.vs/
+
+# Visual Studio publish profile user settings
+*.pubxml.user
 
 # Local v18 folder
 v18/
@@ -13,6 +17,3 @@ v18/
 # Build output - all projects
 **/bin/
 **/obj/
-
-# Local v18 folder
-v18/
