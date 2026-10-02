@@ -118,15 +118,22 @@ namespace SmartFleetManager.API.Controllers
         public async Task<IActionResult> PutJournalEntry(int id, JournalEntry journal)
         {
             _logger.LogInformation("Updating journal with ID {Id}.", id);
+            try
+            {
+                if (id != journal.JournalEntryId)
+                    return BadRequest("Journal ID mismatch");
 
-            if (id != journal.JournalEntryId)
-                return BadRequest("Journal ID mismatch");
+                var existingJournal = await _journalTransactionService.UpdateJournalEntryAsync(id, journal);
+                if (existingJournal == null)
+                    return NotFound();
 
-            var existingJournal = await _journalTransactionService.UpdateJournalEntryAsync(id, journal);
-            if (existingJournal == null)
-                return NotFound();
-
-            return Ok(existingJournal);
+                return Ok(existingJournal);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating journal with ID {Id}.", id);
+                return StatusCode(500, $"An error occurred while updating the journal: {ex.Message}");
+            }
         }
 
         // DELETE api/<PaymentController>/5

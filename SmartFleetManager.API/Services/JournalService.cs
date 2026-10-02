@@ -80,13 +80,15 @@ namespace SmartFleetManager.API.Services
                 }
             }
 
+            journal.AccountTransactionId = 0;
+            journal.AccountStatus = "Draft";
             _context.Entry(existingJournal).CurrentValues.SetValues(journal);
 
             if (journal.Lines != null)
             {
                 foreach (var existingLine in existingJournal.Lines.ToList())
                 {
-                    if (!journal.Lines.Any(l => l.JournalEntryId == existingLine.JournalEntryId))
+                    if (!journal.Lines.Any(l => l.JournalEntryLineId == existingLine.JournalEntryLineId))
                     {
                         _context.JournalEntriesLine.Remove(existingLine);
                     }

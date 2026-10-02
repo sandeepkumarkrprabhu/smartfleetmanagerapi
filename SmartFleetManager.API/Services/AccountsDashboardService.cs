@@ -37,7 +37,7 @@ namespace SmartFleetManager.API.Services
                     on d.TransactionId equals h.Id
                 join a in _context.AccountMasters.AsNoTracking()
                     on d.AccountID equals a.AccountID
-                where h.AccountingStatus == "Posted"
+                where h.AccountingStatus.ToLower().Trim() == "posted"
                       && h.TransactionDate < toDateExclusive
                       && (filter.BranchId == null || h.branchId == filter.BranchId)
                       && (string.IsNullOrWhiteSpace(filter.YearCode) || h.YearCode == filter.YearCode)
