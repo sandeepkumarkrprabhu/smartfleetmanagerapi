@@ -94,10 +94,12 @@ namespace SmartFleetManager.API.Services
                     Date = g.Key.Date,
                     DocumentType = g.Key.DocumentType ?? string.Empty,
                     ReferenceNo = g.Key.ReferenceNo ?? string.Empty,
-                    Description = string.Join("; ",
-                        g.Select(x => x.Narration)
-                            .Where(x => !string.IsNullOrWhiteSpace(x))
-                            .Distinct()),
+                    Description = BuildDescription(
+                        g.Key.ReferenceNo,
+                        string.Join("; ",
+                            g.Select(x => x.Narration)
+                                .Where(x => !string.IsNullOrWhiteSpace(x))
+                                .Distinct())),
                     Receipt = g.Sum(x => x.Debit),
                     Payment = g.Sum(x => x.Credit),
                     TransactionId = g.Key.TransactionId
@@ -128,6 +130,20 @@ namespace SmartFleetManager.API.Services
                 TotalPayment = totalPayment,
                 ClosingBalance = runningBalance
             };
+        }
+
+        private static string BuildDescription(string? referenceNo, string? notes)
+        {
+            var hasReference = !string.IsNullOrWhiteSpace(referenceNo);
+            var hasNotes = !string.IsNullOrWhiteSpace(notes);
+
+            if (hasReference && hasNotes)
+                return $"Ref #: {referenceNo} | Notes: {notes}";
+
+            if (hasReference)
+                return $"Ref #: {referenceNo}";
+
+            return hasNotes ? $"Notes: {notes}" : string.Empty;
         }
 
         private static IQueryable<SmartFleet.Data.Models.AccountTransactionDetail> ApplyCommonFilters(
