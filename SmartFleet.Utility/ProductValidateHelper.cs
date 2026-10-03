@@ -30,7 +30,7 @@ namespace SmartFleet.Utility
                 DateTime expiration = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day)); //Convert.ToDateTime(day + "/" + month + "/" + year);
                 if (DateTime.Now > expiration)
                 {
-                    result.ValidateMessge = "Update License";
+                    result.ValidateMessge = "The License got expired. Contact Software Application Manager for Update License";
                     flag = false;
                 }
                 else
