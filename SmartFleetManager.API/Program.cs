@@ -29,6 +29,7 @@ builder.Services.AddScoped<IReceiptService, ReceiptService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICashBookService, CashBookService>();
 builder.Services.AddScoped<IAccountsDashboardService, AccountsDashboardService>();
+builder.Services.AddScoped<IApplicationLicenseService, ApplicationLicenseService>();
 
 builder.Services.AddCors(options =>
 {
