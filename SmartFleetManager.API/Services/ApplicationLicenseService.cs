@@ -47,18 +47,25 @@ namespace SmartFleetManager.API.Services
                 company.LicenseCode,
                 company.Name);
 
+            
             if (!validation.ValidateStatus)
             {
-                var isExpired = validation.validTillDate is not null
-                    && DateTime.TryParse(validation.validTillDate, out var validTill)
-                    && validTill < DateTime.Now;
+                DateTime? expiredDate = null;
+                if (!string.IsNullOrWhiteSpace(validation.validTillDate)
+                    && DateTime.TryParse(validation.validTillDate, out var tmpValidTill)
+                    && tmpValidTill < DateTime.Now)
+                {
+                    expiredDate = tmpValidTill;
+                }
+
+                var isExpired = expiredDate.HasValue;
 
                 return new ApplicationLicenseStatusDto
                 {
                     IsValid = false,
                     Status = isExpired ? "Expired" : "Invalid",
                     CompanyName = company.Name,
-                    LicenseValidTill = isExpired ? validTill : null,
+                    LicenseValidTill = isExpired ? expiredDate : null,
                     RemainingDays = isExpired ? 0 : null,
                     Message = isExpired
                         ? "Your product license has expired. Please contact the support team for renewal."
