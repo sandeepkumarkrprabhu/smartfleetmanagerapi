@@ -16,6 +16,30 @@ namespace SmartFleetManager.API.Services
             _context = context;
         }
 
+        public async Task<ApplicationLicenseStatusDto?> UpdateCompanyLicenseAsync(string licenseCode)
+        {
+            var company = await _context.Companies.FirstOrDefaultAsync();
+
+            if (company == null)
+                return null;
+
+            if (string.IsNullOrWhiteSpace(licenseCode))
+                throw new ArgumentException("License code is required.", nameof(licenseCode));
+
+            var validation = ProductValidateHelper.ValidateProductKeyWithMessage(licenseCode, company.Name);
+
+            if (!DateTime.TryParse(validation.validTillDate, out var validTillDate))
+                throw new ArgumentException(validation.ValidateMessge ?? "Invalid product license.", nameof(licenseCode));
+
+            company.LicenseCode = licenseCode.Trim();
+            company.LicensedValidTill = validTillDate;
+            company.LastUpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return await GetLicenseStatusAsync();
+        }
+
         public async Task<ApplicationLicenseStatusDto> GetLicenseStatusAsync()
         {
             var company = await _context.Companies
